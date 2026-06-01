@@ -26,8 +26,8 @@
       --red:          #d62828;
       --orange:       #ff6f00;
     }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Poppins', sans-serif; background-color: var(--black); color: #fff; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--black); color: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; width: 100%; position: relative; }
     img { display: block; max-width: 100%; }
     ul { list-style: none; }
     main { background-color: var(--black); padding-bottom: 0; }
@@ -164,18 +164,39 @@
     /* Faixa de comemoração antes do rodapé (espaço do form fixo) */
     .cta-band { width: 100%; aspect-ratio: 3 / 2; background-image: linear-gradient(to bottom, rgba(4,4,4,0.45) 0%, rgba(4,4,4,0.04) 16%, rgba(4,4,4,0.04) 82%, rgba(4,4,4,0.22) 100%), url('img/comemoracao.webp'); background-size: cover; background-position: center; background-repeat: no-repeat; }
 
+    /* Notebook / desktop: pessoas à direita, texto sobre área escura */
+    @media (min-width: 769px) {
+      .hero__bg { object-position: 74% center; }
+      .hero__overlay { background: linear-gradient(to right, #050505 0%, rgba(6,6,6,0.95) 30%, rgba(8,8,8,0.5) 47%, rgba(0,0,0,0.12) 64%, transparent 78%); }
+      .hero__title { font-size: clamp(60px, 7.2vw, 112px); }
+      .hero__content { padding: 48px 80px 130px; gap: 22px; }
+    }
+    /* Notebook com pouca altura: encolhe mais para nada ficar cortado */
+    @media (min-width: 769px) and (max-height: 860px) {
+      .hero__title { font-size: clamp(52px, 6.4vw, 96px); }
+      .hero__content { padding: 36px 80px 112px; gap: 16px; }
+      .hero__tag p { font-size: 20px; }
+      .hero__text { font-size: 16px; }
+    }
+
     @media (max-width: 768px) {
       main { padding-bottom: 0; }
       .cta-band { aspect-ratio: 3 / 2; background-position: center; }
-      .hero__content { padding: 32px 24px 48px; align-items: center; text-align: center; }
-      .hero__overlay { display: none; }
+      .hero { min-height: auto; }
+      .hero__overlay { display: block; background: linear-gradient(180deg, rgba(4,4,4,0.5) 0%, rgba(4,4,4,0.55) 40%, rgba(4,4,4,0.82) 100%); }
+      .hero__content { padding: 40px 22px 52px; align-items: center; text-align: center; gap: 18px; }
+      .hero__title { font-size: clamp(46px, 13vw, 62px); }
+      .hero__tag p { font-size: 18px; }
+      .hero__text { font-size: 15px; max-width: 100%; }
+      .hero__date { font-size: 14px; flex-wrap: wrap; justify-content: center; }
       .section-yellow { padding: 48px 20px; }
       .handwritten-note { display: none; }
       .features-grid { grid-template-columns: 1fr; }
       .feature-card__icon { height: 62px; }
       .section-dark { padding: 48px 20px; }
-      .escalacao-header__icon { height: 34px; }
-      .escalacao-title { font-size: 36px; }
+      .escalacao-header { gap: 10px; flex-wrap: wrap; }
+      .escalacao-header__icon { height: 32px; width: 32px; object-fit: contain; }
+      .escalacao-title { font-size: 30px; white-space: normal; }
       .round-label__inner { height: 56px; padding: 0 24px; }
       .round-label__name { font-size: 22px; }
       .round-label__date { font-size: 12px; }
@@ -194,9 +215,12 @@
       .sticky-form__label { min-width: unset; }
       .form-row { flex-direction: column; }
       .btn-submit { padding: 16px; min-width: unset; width: 100%; }
-      .section-titles { padding: 48px 20px; }
-      .titles-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .title-card { padding: 24px 16px; }
+      .section-titles { padding: 40px 14px; }
+      .titles-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .title-card { padding: 22px 10px; }
+      .title-card__number { font-size: 34px; }
+      .title-card__label { font-size: 10px; letter-spacing: 0.02em; }
+      .title-card__sub { font-size: 14px; }
       .section-cases { padding: 48px 20px; }
       .cases-grid { grid-template-columns: 1fr; }
     }
@@ -538,7 +562,7 @@
       </div>
 
       <!-- Botão CTA interno -->
-      <a href="#topo" class="btn-cta-yellow">
+      <a href="#inscricao" class="btn-cta-yellow">
         Quero ser um Craque da Gestão
       </a>
     </div>
@@ -641,7 +665,7 @@
 <!-- ════════════════════════════════════════════
      FORMULÁRIO FIXO NO RODAPÉ
 ════════════════════════════════════════════ -->
-<div class="sticky-form">
+<div class="sticky-form" id="inscricao">
   <div class="stripe"></div>
   <div class="sticky-form__body">
     <div class="sticky-form__inner">
@@ -679,5 +703,19 @@
     </div>
   </div>
 </div>
+
+<script>
+  // CTAs apontam para o formulário: rola até ele e foca o primeiro campo
+  document.querySelectorAll('a[href="#inscricao"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var form = document.getElementById('inscricao');
+      if (!form) return;
+      form.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      var input = form.querySelector('input');
+      if (input) setTimeout(function () { input.focus({ preventScroll: true }); }, 450);
+    });
+  });
+</script>
 </body>
 </html>
