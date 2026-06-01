@@ -26,8 +26,8 @@
       --red:          #d62828;
       --orange:       #ff6f00;
     }
-    html { scroll-behavior: smooth; overflow-x: clip; max-width: 100%; }
-    body { font-family: 'Poppins', sans-serif; background-color: var(--black); color: #fff; -webkit-font-smoothing: antialiased; overflow-x: clip; max-width: 100%; width: 100%; position: relative; }
+    html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; max-width: 100%; overscroll-behavior-x: none; }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--black); color: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; width: 100%; max-width: 100%; position: relative; overscroll-behavior-x: none; touch-action: pan-y pinch-zoom; }
     img { display: block; max-width: 100%; }
     ul { list-style: none; }
     main { background-color: var(--black); padding-bottom: 0; }
@@ -180,11 +180,9 @@
       .hero__tag p { font-size: 20px; }
       .hero__text { font-size: 16px; }
     }
-    /* Monitores grandes: texto mais para o centro/direita, longe do vazio à esquerda */
+    /* Monitores grandes: texto alinhado à esquerda (como no laptop), sem o vazio do centramento */
     @media (min-width: 1500px) {
-      .hero__content { max-width: none; margin: 0; padding-left: clamp(180px, 23vw, 520px); padding-right: 60px; }
-      .hero__title { font-size: clamp(64px, 5.6vw, 104px); }
-      .hero__overlay { background: linear-gradient(to right, #050505 0%, rgba(6,6,6,0.96) 36%, rgba(8,8,8,0.55) 54%, rgba(0,0,0,0.15) 68%, transparent 82%); }
+      .hero__content { max-width: none; margin: 0; padding-left: clamp(80px, 6vw, 160px); padding-right: 60px; }
     }
 
     @media (max-width: 768px) {
