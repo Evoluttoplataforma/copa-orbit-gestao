@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscrição confirmada — Craques da Gestão 2026 · Time Olívia</title>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <link rel="apple-touch-icon" href="img/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700;800;900&family=Indie+Flower&family=Caveat:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --yellow:       #f7d518;
+      --yellow-neon:  #ffff00;
+      --yellow-light: #fff8e7;
+      --green:        #0e8a3e;
+      --green-field:  #1e9730;
+      --green-dark:   #047032;
+      --blue:         #0033a0;
+      --blue-dark:    #1b229f;
+      --black:        #040404;
+      --black-soft:   #0a0a0a;
+      --cream:        #f9f3ed;
+      --red:          #d62828;
+      --orange:       #ff6f00;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--black); color: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; }
+    .stripe { height: 5px; width: 100%; background-image: repeating-linear-gradient(to right, var(--green) 0 15px, var(--yellow) 15px 30px); }
+
+    /* ───────────── HERO DE CONFIRMAÇÃO ───────────── */
+    .thanks {
+      position: relative; min-height: 100vh; overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(14,138,62,0.55) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 100%, rgba(0,51,160,0.45) 0%, transparent 55%),
+        linear-gradient(180deg, #062012 0%, var(--black) 55%, var(--black-soft) 100%);
+    }
+    /* luzes de estádio (shimmer) */
+    .stadium-lights { position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.18) 0 2px, transparent 3px),
+        radial-gradient(circle at 88% 22%, rgba(255,255,255,0.16) 0 2px, transparent 3px),
+        radial-gradient(circle at 22% 8%, rgba(247,213,24,0.18) 0 2px, transparent 3px),
+        radial-gradient(circle at 70% 12%, rgba(255,255,255,0.12) 0 2px, transparent 3px);
+      animation: twinkle 3.5s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle { from { opacity: 0.35; } to { opacity: 0.9; } }
+
+    /* confete (gerado via JS) */
+    .confetti-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+    .confetti { position: absolute; top: -5vh; width: 10px; height: 14px; opacity: 0; border-radius: 2px;
+      animation: confetti-fall linear infinite; will-change: transform, opacity; }
+    @keyframes confetti-fall {
+      0%   { transform: translate3d(0,-10vh,0) rotateZ(0deg); opacity: 0; }
+      8%   { opacity: 1; }
+      100% { transform: translate3d(var(--drift,0px),110vh,0) rotateZ(720deg); opacity: 1; }
+    }
+
+    .thanks__inner { position: relative; z-index: 2; max-width: 1040px; margin: 0 auto;
+      padding: 70px 24px 90px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; }
+
+    .badge-confirm {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid var(--yellow); background: rgba(14,138,62,0.35);
+      border-radius: 30px; padding: 8px 20px; backdrop-filter: blur(2px);
+      font-weight: 700; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase;
+      animation: pop-in 0.6s cubic-bezier(.2,1.2,.3,1) both;
+    }
+    .badge-confirm .tick { display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%; background: var(--yellow-neon); color: var(--green-dark);
+      font-weight: 900; font-size: 14px; }
+
+    .trophy-wrap { position: relative; margin: 4px 0 2px; animation: float 4s ease-in-out infinite; }
+    .trophy-wrap::after { content: ''; position: absolute; left: 50%; top: 46%; transform: translate(-50%,-50%);
+      width: 280px; height: 280px; border-radius: 50%; z-index: -1;
+      background: radial-gradient(circle, rgba(247,213,24,0.55) 0%, rgba(247,213,24,0.12) 45%, transparent 70%);
+      filter: blur(6px); animation: glow 2.6s ease-in-out infinite alternate; }
+    .trophy-wrap img { height: 260px; width: auto; filter: drop-shadow(0 18px 40px rgba(0,0,0,0.6)); }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    @keyframes glow { from { opacity: 0.55; transform: translate(-50%,-50%) scale(0.92); } to { opacity: 1; transform: translate(-50%,-50%) scale(1.06); } }
+
+    .thanks__title { font-family: 'Anton', sans-serif; line-height: 0.98; text-transform: uppercase;
+      font-size: clamp(46px, 8vw, 104px); animation: pop-in 0.7s cubic-bezier(.2,1.2,.3,1) 0.1s both; }
+    .thanks__title .l1 { color: #fff; display: block; }
+    .thanks__title .l2 { display: block; color: var(--yellow); }
+    .thanks__title .l2 .g { color: var(--green-field); }
+
+    .thanks__hand { font-family: 'Indie Flower', cursive; font-size: clamp(24px, 4vw, 34px); color: var(--yellow-neon);
+      transform: rotate(-2deg); }
+    .thanks__text { font-size: clamp(16px, 2.2vw, 19px); max-width: 640px; line-height: 1.6; color: rgba(255,255,255,0.9); }
+    .thanks__text strong { color: var(--yellow); }
+
+    /* pílulas de data */
+    .date-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 4px; }
+    .date-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.18); border-radius: 14px; padding: 10px 16px; font-size: 15px; font-weight: 600; }
+    .date-pill strong { color: var(--yellow); font-weight: 800; }
+
+    /* próximos passos */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; margin-top: 26px; }
+    .step { background: rgba(255,255,255,0.05); border: 1px solid rgba(247,213,24,0.35); border-radius: 18px;
+      padding: 24px 18px; text-align: left; display: flex; flex-direction: column; gap: 8px; }
+    .step__num { font-family: 'Anton', sans-serif; font-size: 30px; color: var(--green-field);
+      width: 48px; height: 48px; border-radius: 50%; background: rgba(14,138,62,0.18);
+      border: 2px solid var(--green-field); display: flex; align-items: center; justify-content: center; }
+    .step__title { font-weight: 800; font-size: 17px; text-transform: uppercase; letter-spacing: 0.02em; }
+    .step__text { font-size: 14.5px; line-height: 1.5; color: rgba(255,255,255,0.78); }
+
+    /* CTAs */
+    .cta-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 30px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      border-radius: 12px; padding: 16px 26px; font-weight: 800; font-size: 16px; letter-spacing: 0.02em;
+      text-transform: uppercase; cursor: pointer; transition: transform 0.15s ease, opacity 0.2s; border: none; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn--wpp { background: #25D366; color: #053d1c; }
+    .btn--cal { background: var(--yellow); color: var(--blue); }
+    .btn--ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+
+    /* RODAPÉ */
+    footer { background: var(--cream); text-align: center; position: relative; }
+    .footer__inner { max-width: 1100px; margin: 0 auto; padding: 54px 20px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .footer__title { font-family: 'Caveat', cursive; font-weight: 700; color: var(--blue); font-size: clamp(26px,4vw,48px); line-height: 0.95; }
+    .footer__title .g { color: var(--green); display: block; }
+    .footer__brand { font-size: 14px; font-weight: 500; color: #000; margin-top: 6px; }
+
+    @media (max-width: 768px) {
+      .thanks__inner { padding: 54px 20px 70px; gap: 18px; }
+      .trophy-wrap img { height: 190px; }
+      .trophy-wrap::after { width: 210px; height: 210px; }
+      .steps { grid-template-columns: 1fr; }
+      .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .trophy-wrap, .stadium-lights, .confetti, .trophy-wrap::after { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stripe"></div>
+
+  <section class="thanks">
+    <div class="stadium-lights"></div>
+    <div class="confetti-layer" id="confetti"></div>
+
+    <div class="thanks__inner">
+      <span class="badge-confirm"><span class="tick">✓</span> Inscrição confirmada</span>
+
+      <div class="trophy-wrap">
+        <img src="img/troofeu.webp" alt="Troféu Craques do Orbit" />
+      </div>
+
+      <h1 class="thanks__title">
+        <span class="l1">Você está</span>
+        <span class="l2">no <span class="g">time!</span></span>
+      </h1>
+
+      <p class="thanks__hand">Sua vaga nos Craques da Gestão está garantida! 🏆</p>
+
+      <p class="thanks__text">
+        Bem-vindo ao <strong>Time Olívia</strong>. Durante uma semana inteira você vai ver
+        os <strong>12 agentes da Orbit</strong> entrarem em campo pela sua gestão — e fechamos
+        com a aula ao vivo do <strong>Igor Furniel</strong> no Dia do Consultor.
+      </p>
+
+      <div class="date-pills">
+        <span class="date-pill">📅 <span>Semana de jogos:</span> <strong>18 a 25 de junho</strong></span>
+        <span class="date-pill">🏆 <span>Grande final:</span> <strong>25/06 às 18h</strong></span>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step__num">1</div>
+          <p class="step__title">Fique de olho</p>
+          <p class="step__text">Enviamos o link de acesso e os lembretes pelo seu <strong>e-mail</strong> e <strong>WhatsApp</strong>. Confira também o spam.</p>
+        </div>
+        <div class="step">
+          <div class="step__num">2</div>
+          <p class="step__title">Anote na agenda</p>
+          <p class="step__text">A semana começa <strong>18/06</strong> e a aula final é <strong>25/06 às 18h</strong>. Salve no seu calendário pra não perder.</p>
+        </div>
+        <div class="step">
+          <div class="step__num">3</div>
+          <p class="step__title">Chame o seu time</p>
+          <p class="step__text">Gestão se ganha em equipe. Convide quem decide junto com você para assistir e jogar do seu lado.</p>
+        </div>
+      </div>
+
+      <div class="cta-group">
+        <a href="#" class="btn btn--wpp">💬 Entrar no grupo VIP</a>
+        <a id="calLink" href="#" target="_blank" rel="noopener" class="btn btn--cal">📅 Adicionar à agenda</a>
+        <a href="index.html" class="btn btn--ghost">← Voltar ao início</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="stripe"></div>
+    <div class="footer__inner">
+      <p class="footer__title">NOS VEMOS EM CAMPO <span class="g">CRAQUE DA GESTÃO!</span></p>
+      <p class="footer__brand">@ORBITGESTAO · ORBITGESTAO.COM.BR</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Confete da Copa ──
+    (function () {
+      var layer = document.getElementById('confetti');
+      if (!layer) return;
+      var colors = ['#f7d518', '#ffff00', '#0e8a3e', '#1e9730', '#0033a0', '#ffffff'];
+      var COUNT = window.innerWidth < 768 ? 60 : 110;
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < COUNT; i++) {
+        var c = document.createElement('span');
+        c.className = 'confetti';
+        var size = 6 + Math.random() * 9;
+        c.style.left = (Math.random() * 100) + 'vw';
+        c.style.width = size + 'px';
+        c.style.height = (size * (1 + Math.random())) + 'px';
+        c.style.background = colors[(Math.random() * colors.length) | 0];
+        c.style.setProperty('--drift', (Math.random() * 220 - 110) + 'px');
+        c.style.animationDuration = (4.5 + Math.random() * 4.5) + 's';
+        c.style.animationDelay = (-Math.random() * 8) + 's';
+        if (Math.random() > 0.5) c.style.borderRadius = '50%';
+        frag.appendChild(c);
+      }
+      layer.appendChild(frag);
+    })();
+
+    // ── Link "Adicionar à agenda" (Google Calendar) ──
+    (function () {
+      var el = document.getElementById('calLink');
+      if (!el) return;
+      var p = new URLSearchParams({
+        action: 'TEMPLATE',
+        text: 'Craques da Gestão 2026 — Aula Final com Igor Furniel',
+        dates: '20260625T210000Z/20260625T230000Z', // 25/06 18h–20h (BRT, UTC-3)
+        details: 'Dia do Consultor — aula ao vivo do Time Olívia (Orbit). Fique de olho no e-mail e WhatsApp para o link de acesso.',
+        location: 'Online'
+      });
+      el.href = 'https://calendar.google.com/calendar/render?' + p.toString();
+    })();
+  </script>
+</body>
+</html>
