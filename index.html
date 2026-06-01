@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Craques da Gestão 2026 — Uma semana com o Time Olívia, 100% gratuita</title>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <link rel="apple-touch-icon" href="img/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700;800;900&family=Indie+Flower&family=Caveat:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --yellow:       #f7d518;
+      --yellow-neon:  #ffff00;
+      --yellow-light: #fff8e7;
+      --green:        #0e8a3e;
+      --green-field:  #1e9730;
+      --green-dark:   #047032;
+      --blue:         #0033a0;
+      --blue-dark:    #1b229f;
+      --black:        #040404;
+      --black-soft:   #0a0a0a;
+      --cream:        #f9f3ed;
+      --red:          #d62828;
+      --orange:       #ff6f00;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--black); color: #fff; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+    main { background-color: var(--black); padding-bottom: 0; }
+    .stripe { height: 5px; width: 100%; background-image: repeating-linear-gradient(to right, var(--green) 0 15px, var(--yellow) 15px 30px); }
+    .hero { position: relative; background-color: var(--black-soft); color: #fff; min-height: 100vh; overflow: hidden; }
+    .hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% center; z-index: 0; pointer-events: none; user-select: none; }
+    .hero__overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to right, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.30) 50%, transparent 100%); }
+    .hero__content { position: relative; z-index: 2; max-width: 1366px; margin: 0 auto; padding: 60px 80px 160px; display: flex; flex-direction: column; align-items: flex-start; gap: 30px; }
+    .hero__tag { background: var(--black-soft); padding: 4px 8px; display: inline-block; }
+    .hero__tag p { font-family: 'Anton', sans-serif; font-size: 24px; line-height: 1.4; letter-spacing: 0.05em; color: #fff; }
+    .hero__title { font-family: 'Anton', sans-serif; font-size: clamp(70px, 9vw, 130px); line-height: 1; text-transform: uppercase; }
+    .hero__title .line-white  { color: #fff; display: block; }
+    .hero__title .word-do     { color: var(--green); }
+    .hero__title .word-enem   { color: var(--blue); }
+    .hero__title .word-year   { color: var(--yellow); display: block; }
+    .hero__badge { display: inline-flex; align-items: center; border: 1px solid var(--yellow); background: rgba(255, 82, 39, 0.30); border-radius: 20px; padding: 5px 15px; }
+    .hero__badge p { font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.5; color: #fff; }
+    .hero__badge .dot { font-weight: 900; color: var(--yellow); }
+    .hero__text { font-family: 'Poppins', sans-serif; font-size: 18px; max-width: 560px; line-height: 1.6; color: #fff; }
+    .hero__text strong { color: inherit; }
+    .hero__text .highlight { color: var(--yellow); font-weight: 700; }
+    .hero__date { font-family: 'Poppins', sans-serif; font-size: 18px; display: flex; align-items: center; gap: 8px; color: #fff; }
+    .hero__date strong { color: var(--yellow); }
+    .section-yellow { position: relative; background-color: var(--yellow); background-image: url('https://aprovatotal.com.br/lp/images/craques-enem/section2-bg.webp'); background-size: cover; background-position: center; padding: 80px; overflow: hidden; }
+    .section-yellow__inner { position: relative; z-index: 1; max-width: 1206px; margin: 0 auto; }
+    .handwritten-green { font-family: 'Indie Flower', cursive; font-size: 34px; color: var(--green); transform: rotate(-2deg); display: inline-block; line-height: 1; }
+    .section-yellow__title { font-family: 'Anton', sans-serif; font-size: clamp(50px, 8vw, 97px); line-height: 1; margin-top: 16px; margin-bottom: 40px; }
+    .section-yellow__title .line-black { color: var(--black-soft); display: block; }
+    .section-yellow__title .line-blue  { color: var(--blue); display: block; }
+    .section-yellow__title .line-green { color: var(--green); display: block; }
+    .handwritten-note { position: absolute; right: 16px; top: 80px; width: 323px; text-align: center; font-family: 'Indie Flower', cursive; font-size: 34px; line-height: 1.4; color: var(--blue); transform: rotate(-11deg); }
+    .section-yellow__desc { font-family: 'Poppins', sans-serif; font-size: 18px; color: var(--black-soft); max-width: 700px; line-height: 1.6; margin-bottom: 48px; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .feature-card { background: var(--yellow-light); border: 4px solid var(--yellow-neon); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .feature-card__top { display: flex; align-items: flex-start; gap: 14px; }
+    .feature-card__icon { height: 56px; width: 56px; object-fit: contain; flex-shrink: 0; }
+    .feature-card__title { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 700; color: var(--blue-dark); text-transform: uppercase; line-height: 1; }
+    .feature-card__subtitle { font-family: 'Indie Flower', cursive; font-size: 17px; color: var(--green); line-height: 1.2; margin-top: 4px; }
+    .feature-card__text { font-family: 'Poppins', sans-serif; font-size: 16px; color: #000; line-height: 1.5; }
+    .section-dark { position: relative; background: linear-gradient(203deg, #047032 0%, var(--black-soft) 46.5%); padding: 80px; overflow: hidden; }
+    .section-dark__inner { max-width: 1206px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 60px; }
+    .escalacao-header { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: nowrap; }
+    .escalacao-header__icon { height: 64px; width: auto; flex-shrink: 0; }
+    .escalacao-title { font-family: 'Anton', sans-serif; font-size: clamp(34px, 6.2vw, 84px); line-height: 1; color: #fff; white-space: nowrap; }
+    .round-block { display: flex; flex-direction: column; align-items: center; width: 100%; }
+    .round-label { position: relative; z-index: 10; margin-bottom: -24px; }
+    .round-label__bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .round-label__inner { position: relative; display: flex; align-items: center; justify-content: center; gap: 10px; height: 78px; padding: 0 60px; }
+    .round-label__name { font-family: 'Anton', sans-serif; font-size: 60px; color: #fff; line-height: 1; }
+    .round-label__date { font-family: 'Anton', sans-serif; font-size: 30px; line-height: 1; white-space: nowrap; }
+    .round-label__date .sep   { color: var(--cream); }
+    .round-label__date .date  { color: var(--yellow-neon); }
+    .field-card { position: relative; width: 100%; max-width: 1139px; background-color: var(--green-field); border: 3px solid; border-radius: 30px; overflow: hidden; padding: 80px 4px 60px; }
+    .field-card--oitavas   { border-color: #fef0e8; }
+    .field-card--quartas   { border-color: var(--yellow); }
+    .field-card--semifinal { border-color: var(--orange); }
+    .field-card--final     { background: linear-gradient(to bottom, var(--black-soft), var(--green-field)); border-color: var(--red); }
+    .field-card__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.25; pointer-events: none; user-select: none; }
+    .profs-list { position: relative; z-index: 1; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 24px; padding: 0 20px; }
+    .prof-item { display: flex; align-items: flex-start; gap: 15px; }
+    .prof-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #fff; overflow: hidden; background: var(--green-dark); flex-shrink: 0; }
+    .prof-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; }
+    .prof-info { display: flex; flex-direction: column; color: #fff; width: 165px; }
+    .prof-info__subject { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 700; line-height: 1.2; }
+    .prof-info__name, .prof-info__time { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 500; line-height: 1.15; letter-spacing: -0.03em; }
+    .final-content { position: relative; z-index: 1; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 20px; padding: 0 20px; }
+    .final-trophy { height: 351px; width: auto; }
+    .final-info { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .final-info__title { font-family: 'Anton', sans-serif; font-size: 60px; color: var(--yellow-neon); line-height: 1; text-align: center; }
+    .final-info__subtitle { font-family: 'Anton', sans-serif; font-size: 40px; color: #fff; line-height: 1; margin-top: 16px; text-align: center; }
+    .final-info__text { font-family: 'Poppins', sans-serif; font-size: 24px; color: #fff; line-height: 1.2; text-align: center; max-width: 422px; }
+    .final-info__text .highlight { color: var(--yellow-neon); font-weight: 700; }
+    .final-host { width: 130px; height: 130px; border-radius: 50%; border: 4px solid var(--yellow-neon); object-fit: cover; object-position: top center; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+    .btn-cta-yellow { display: inline-flex; align-items: center; justify-content: center; background: var(--yellow); color: var(--blue); border: none; border-radius: 12px; padding: 15px 18px; font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 700; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: transform 0.15s ease; }
+    .btn-cta-yellow:hover  { transform: scale(1.02); }
+    .btn-cta-yellow:active { transform: scale(0.99); }
+    .sticky-form { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40; }
+    .sticky-form__body { background: var(--blue); padding: 18px 24px; }
+    .sticky-form__inner { max-width: 1320px; margin: 0 auto; display: flex; flex-direction: row; align-items: center; gap: 32px; }
+    .sticky-form__label { display: flex; flex-direction: column; gap: 6px; min-width: 250px; flex-shrink: 0; }
+    .badge-cde { display: inline-flex; align-items: center; justify-content: center; background: var(--yellow); border-radius: 4px; padding: 6px 8px; font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 900; letter-spacing: 0.05em; width: fit-content; }
+    .badge-cde .w-black { color: var(--black-soft); }
+    .badge-cde .w-green { color: var(--green); margin: 0 4px; }
+    .badge-cde .w-blue  { color: var(--blue); }
+    .sticky-form__title { font-family: 'Anton', sans-serif; font-size: 28px; color: #fff; line-height: 1.05; }
+    .sticky-form form { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .form-row { display: flex; flex-direction: row; align-items: stretch; gap: 12px; flex-wrap: wrap; }
+    .form-field { flex: 1; min-width: 150px; display: flex; flex-direction: column; gap: 2px; background: #fff; border-radius: 10px; padding: 11px 16px; cursor: text; }
+    .form-field__label { font-family: 'Poppins', sans-serif; font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: var(--black-soft); line-height: 1.2; }
+    .form-field input { background: transparent; border: none; outline: none; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 500; color: var(--black-soft); line-height: 1.4; }
+    .form-field input::placeholder { color: rgba(10,10,10,0.4); }
+    .btn-submit { background: var(--yellow); color: var(--blue); border: none; border-radius: 10px; padding: 16px 24px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 900; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; width: 100%; white-space: nowrap; transition: opacity 0.2s; }
+    .btn-submit:hover { opacity: 0.9; }
+
+    /* ──────────────────────────────────────────────
+       SEÇÃO – TÍTULOS DO TIME (stats)
+    ────────────────────────────────────────────── */
+    .section-titles { position: relative; background-color: var(--black-soft); padding: 80px; overflow: hidden; }
+    .section-titles__bg-wrapper { position: absolute; inset: 0; z-index: 0; }
+    .section-titles__bg { width: 100%; height: 100%; object-fit: cover; opacity: 0.30; }
+    .section-titles__overlay { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 0%, rgba(4,4,4,0.85) 80%); }
+    .section-titles__inner { position: relative; z-index: 1; max-width: 1206px; margin: 0 auto; text-align: center; }
+    .section-titles__heading { font-family: 'Anton', sans-serif; font-size: clamp(50px, 8vw, 90px); line-height: 1; margin: 16px auto 60px; text-transform: uppercase; }
+    .section-titles__heading span { display: block; }
+    .section-titles__heading .word-first { color: #fff; }
+    .section-titles__heading .word-do { color: var(--yellow); }
+    .section-titles__heading .word-team { color: var(--green); }
+    .titles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .title-card { background: rgba(247, 213, 24, 0.10); border: 3px solid var(--yellow); border-radius: 20px; padding: 32px 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+    .title-card__number { font-family: 'Anton', sans-serif; font-size: clamp(48px, 6vw, 72px); color: var(--yellow); line-height: 1; }
+    .title-card__label { font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 0.1em; color: #fff; text-transform: uppercase; }
+    .title-card__sub { font-family: 'Indie Flower', cursive; font-size: 18px; color: var(--green-field); line-height: 1.3; }
+
+    /* ──────────────────────────────────────────────
+       SEÇÃO – CRAQUES QUE JÁ JOGAM (depoimentos)
+    ────────────────────────────────────────────── */
+    .section-cases { position: relative; background: linear-gradient(to bottom, var(--black-soft) 0%, var(--green-dark) 100%); padding: 80px; overflow: hidden; }
+    .section-cases__bg-wrapper { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .section-cases__bg { width: 100%; height: 100%; object-fit: cover; object-position: right center; opacity: 0.15; }
+    .section-cases__inner { position: relative; z-index: 1; max-width: 1206px; margin: 0 auto; text-align: center; }
+    .section-cases__heading { font-family: 'Anton', sans-serif; font-size: clamp(50px, 8vw, 90px); line-height: 1; margin: 16px auto 48px; text-transform: uppercase; }
+    .section-cases__heading .line-white { color: #fff; display: block; }
+    .section-cases__heading .line-yellow { color: var(--yellow); display: block; }
+    .section-cases__heading .line-green { color: var(--green); display: block; }
+    .cases-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .case-card { background: var(--black-soft); border: 3px solid var(--yellow); border-radius: 20px; overflow: hidden; transition: transform 0.2s; }
+    .case-card:hover { transform: translateY(-4px); }
+    .case-card__video { position: relative; width: 100%; padding-top: 177.78%; background: var(--black); }
+    .case-card__video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .case-card__info { padding: 16px; text-align: left; }
+    .case-card__name { font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 700; color: var(--yellow); line-height: 1.2; }
+    .case-card__company { font-family: 'Indie Flower', cursive; font-size: 16px; color: #fff; margin-top: 4px; line-height: 1.2; }
+
+    /* Faixa de comemoração antes do rodapé (espaço do form fixo) */
+    .cta-band { width: 100%; aspect-ratio: 3 / 2; background-image: linear-gradient(to bottom, rgba(4,4,4,0.45) 0%, rgba(4,4,4,0.04) 16%, rgba(4,4,4,0.04) 82%, rgba(4,4,4,0.22) 100%), url('img/comemoracao.png'); background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+    @media (max-width: 768px) {
+      main { padding-bottom: 0; }
+      .cta-band { aspect-ratio: 3 / 2; background-position: center; }
+      .hero__content { padding: 32px 24px 48px; align-items: center; text-align: center; }
+      .hero__overlay { display: none; }
+      .section-yellow { padding: 48px 20px; }
+      .handwritten-note { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card__icon { height: 62px; }
+      .section-dark { padding: 48px 20px; }
+      .escalacao-header__icon { height: 34px; }
+      .escalacao-title { font-size: 36px; }
+      .round-label__inner { height: 56px; padding: 0 24px; }
+      .round-label__name { font-size: 22px; }
+      .round-label__date { font-size: 12px; }
+      .field-card { padding: 48px 4px 32px; }
+      .prof-avatar { width: 80px; height: 80px; }
+      .prof-info__subject { font-size: 20px; }
+      .prof-info__name, .prof-info__time { font-size: 16px; }
+      .prof-info { width: 140px; }
+      .final-content { flex-direction: column; }
+      .final-trophy { height: 200px; }
+      .final-info__title { font-size: 30px; }
+      .final-info__subtitle { font-size: 22px; }
+      .final-info__text { font-size: 16px; }
+      .sticky-form__inner { flex-direction: column; align-items: stretch; }
+      .sticky-form__label { min-width: unset; }
+      .form-row { flex-direction: column; }
+      .btn-submit { padding: 16px; min-width: unset; width: 100%; }
+      .section-titles { padding: 48px 20px; }
+      .titles-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .title-card { padding: 24px 16px; }
+      .section-cases { padding: 48px 20px; }
+      .cases-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main id="topo">
+  <!-- ════════════════════════════════════════════
+       SEÇÃO 1 – HERO
+  ════════════════════════════════════════════ -->
+  <section class="hero">
+    <img class="hero__bg" src="img/hero-capa.png" alt="" />
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <div class="hero__tag">
+        <p>VOCÊ FOI CONVOCADO!</p>
+      </div>
+      <h1 class="hero__title">
+        <span class="line-white">CRAQUES</span>
+        <span>
+          <span class="word-do">DA</span>
+          <span class="word-enem"> GESTÃO</span>
+          <span class="word-year"> 2026</span>
+        </span>
+      </h1>
+      <div class="hero__badge">
+        <p>100% GRATUITO<span class="dot"> · </span>ONLINE<span class="dot"> · </span>JUNHO 2026</p>
+      </div>
+      <p class="hero__text">
+        <span class="highlight">Uma semana inteira de Dia do Consultor</span> com a Olívia e os 12 agentes especialistas da Orbit em ação. Fechamos com <strong>aula ao vivo do Igor Furniel</strong>, depoimentos dos 3 maiores canais Orbit e um pitch exclusivo só pra quem assistir até o final.
+      </p>
+      <p class="hero__date">
+        📅 Quando? <strong>De 18 a 25 de junho</strong> · 🏆 Aula final: <strong>25/06 às 18h</strong>
+      </p>
+    </div>
+  </section>
+  <div class="stripe"></div>
+
+  <!-- ════════════════════════════════════════════
+       SEÇÃO 2 – AMARELA (Jornada do Craque)
+  ════════════════════════════════════════════ -->
+  <section class="section-yellow">
+    <div class="section-yellow__inner">
+      <p class="handwritten-green">A JORNADA DO CRAQUE COMEÇA AGORA!</p>
+      <h2 class="section-yellow__title">
+        <span class="line-black">VENCER NA GESTÃO</span>
+        <span class="line-blue">É IGUAL VENCER</span>
+        <span class="line-green">UMA COPA DO MUNDO.</span>
+      </h2>
+      <p class="handwritten-note">
+        Brasil joga com 11 em campo.<br>
+        Sua empresa joga com 12 agentes de IA.
+      </p>
+      <p class="section-yellow__desc">
+        Não tem mistério: <strong>é estratégia, time e dado em tempo real</strong>. A semana dos <strong>Craques da Gestão</strong> é uma amostra de como o Time Olívia vai operar a sua empresa daqui em diante — todos os dias, 24 horas por dia, junto com o seu time humano.
+      </p>
+      <ul class="features-grid">
+        <li class="feature-card">
+          <div class="feature-card__top">
+            <img class="feature-card__icon" src="https://aprovatotal.com.br/lp/images/craques-enem/icon-estrategia.svg" alt="Ícone de estratégia" />
+            <div>
+              <p class="feature-card__title">ESTRATÉGIA</p>
+              <p class="feature-card__subtitle">Você precisa entender as regras do jogo</p>
+            </div>
+          </div>
+          <p class="feature-card__text">
+            Como tirar o plano estratégico do PDF e levar pra execução semanal. O Time Olívia conecta missão, indicadores e processos — você decide, os agentes executam.
+          </p>
+        </li>
+        <li class="feature-card">
+          <div class="feature-card__top">
+            <img class="feature-card__icon" src="https://aprovatotal.com.br/lp/images/craques-enem/icon-conteudo.svg" alt="Ícone de agentes" />
+            <div>
+              <p class="feature-card__title">AGENTES</p>
+              <p class="feature-card__subtitle">Conheça os 12 craques do Time Olívia</p>
+            </div>
+          </div>
+          <p class="feature-card__text">
+            12 agentes especialistas — Estratégico, Comercial, Processos, Pessoas, Indicadores, Riscos, Treinamento, Oportunidades, Documentos, Reuniões, Problemas e Pesquisas. Cada área da sua empresa com um especialista digital.
+          </p>
+        </li>
+        <li class="feature-card">
+          <div class="feature-card__top">
+            <img class="feature-card__icon" src="https://aprovatotal.com.br/lp/images/craques-enem/icon-treino.svg" alt="Ícone de diagnóstico" />
+            <div>
+              <p class="feature-card__title">DIAGNÓSTICO</p>
+              <p class="feature-card__subtitle">Veja a Orbit operando no seu cenário</p>
+            </div>
+          </div>
+          <p class="feature-card__text">
+            Demonstração personalizada de 30 min ao final da semana. Você sai com diagnóstico aplicável, roadmap claro e estimativa específica de impacto na sua operação.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <div class="stripe"></div>
+
+  <!-- ════════════════════════════════════════════
+       SEÇÃO – OS TÍTULOS DO TIME ORBIT
+  ════════════════════════════════════════════ -->
+  <section class="section-titles">
+    <div class="section-titles__bg-wrapper">
+      <img class="section-titles__bg" src="img/trofeu-lift.png" alt="" />
+      <div class="section-titles__overlay"></div>
+    </div>
+    <div class="section-titles__inner">
+      <p class="handwritten-green" style="color: var(--yellow);">A HISTÓRIA DO TIME FALA POR ELA MESMA!</p>
+      <h2 class="section-titles__heading">
+        <span class="word-first">OS TÍTULOS</span>
+        <span>
+          <span class="word-do">DO</span>
+          <span class="word-team"> TIME ORBIT</span>
+        </span>
+      </h2>
+      <ul class="titles-grid">
+        <li class="title-card">
+          <p class="title-card__number">30</p>
+          <p class="title-card__label">ANOS DE TÍTULOS</p>
+          <p class="title-card__sub">de metodologia GSN</p>
+        </li>
+        <li class="title-card">
+          <p class="title-card__number">8.000+</p>
+          <p class="title-card__label">EMPRESAS NO BANCO</p>
+          <p class="title-card__sub">já passaram pelo time</p>
+        </li>
+        <li class="title-card">
+          <p class="title-card__number">3.045+</p>
+          <p class="title-card__label">CLIENTES ATIVOS</p>
+          <p class="title-card__sub">jogam hoje no Orbit</p>
+        </li>
+        <li class="title-card">
+          <p class="title-card__number">12</p>
+          <p class="title-card__label">CRAQUES NO ELENCO</p>
+          <p class="title-card__sub">agentes de IA especialistas</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <div class="stripe"></div>
+
+  <!-- ════════════════════════════════════════════
+       SEÇÃO 3 – ESCALAÇÃO NO CAMPO
+       12 agentes distribuídos: 5+4+3 = 12 + Final (demo)
+  ════════════════════════════════════════════ -->
+  <section class="section-dark">
+    <div class="section-dark__inner">
+      <div class="escalacao-header">
+        <img class="escalacao-header__icon" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/icon-tactics.svg" alt="" />
+        <h2 class="escalacao-title">ESCALAÇÃO DO TIME</h2>
+        <img class="escalacao-header__icon" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/icon-whistle.svg" alt="" />
+      </div>
+
+      <!-- ── OITAVAS — Time de Visão e Estratégia (5 agentes) ── -->
+      <div class="round-block">
+        <div class="round-label">
+          <img class="round-label__bg" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/banner-green.svg" alt="" />
+          <div class="round-label__inner">
+            <p class="round-label__name">OITAVAS DE FINAL</p>
+            <p class="round-label__date">
+              <span class="sep">|</span>
+              <span class="date"> 18 a 20 de junho</span>
+            </p>
+          </div>
+        </div>
+        <div class="field-card field-card--oitavas">
+          <img class="field-card__bg" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/field-bg.webp" alt="" />
+          <ul class="profs-list">
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/igor.png" alt="Agente Estratégico" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Estratégia</p>
+                <p class="prof-info__name">Agente <strong>Estratégico</strong></p>
+                <p class="prof-info__time">Diretoria</p>
+              </div>
+            </li>
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/olivia.png" alt="Agente de Indicadores" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Indicadores</p>
+                <p class="prof-info__name">Agente de <strong>Indicadores</strong></p>
+                <p class="prof-info__time">BI integrado</p>
+              </div>
+            </li>
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/chris.png" alt="Agente de Oportunidades" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Oportunidades</p>
+                <p class="prof-info__name">Agente de <strong>Oportunidades</strong></p>
+                <p class="prof-info__time">Sales Ops</p>
+              </div>
+            </li>
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/igor.png" alt="Agente de Riscos" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Riscos</p>
+                <p class="prof-info__name">Agente de <strong>Riscos</strong></p>
+                <p class="prof-info__time">Compliance</p>
+              </div>
+            </li>
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/olivia.png" alt="Agente de Documentos" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Documentos</p>
+                <p class="prof-info__name">Agente de <strong>Documentos</strong></p>
+                <p class="prof-info__time">Governança</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── QUARTAS — Time de Pessoas (4 agentes) ── -->
+      <div class="round-block">
+        <div class="round-label">
+          <img class="round-label__bg" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/banner-green.svg" alt="" />
+          <div class="round-label__inner">
+            <p class="round-label__name">QUARTAS DE FINAL</p>
+            <p class="round-label__date">
+              <span class="sep">|</span>
+              <span class="date"> 21 a 22 de junho</span>
+            </p>
+          </div>
+        </div>
+        <div class="field-card field-card--quartas">
+          <img class="field-card__bg" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/field-bg.webp" alt="" />
+          <ul class="profs-list">
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/olivia.png" alt="Agente de Pessoas" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Pessoas</p>
+                <p class="prof-info__name">Agente de <strong>Pessoas</strong></p>
+                <p class="prof-info__time">People Ops</p>
+              </div>
+            </li>
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/chris.png" alt="Módulo Recrutamento e Seleção" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">R&S</p>
+                <p class="prof-info__name">Módulo de <strong>R&S</strong></p>
+                <p class="prof-info__time">Talent</p>
+              </div>
+            </li>
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/igor.png" alt="Agente de Treinamento" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Treinamento</p>
+                <p class="prof-info__name">Agente de <strong>Treinamento</strong></p>
+                <p class="prof-info__time">L&D</p>
+              </div>
+            </li>
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/olivia.png" alt="Agente de Pesquisas" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Pesquisas</p>
+                <p class="prof-info__name">Agente de <strong>Pesquisas</strong></p>
+                <p class="prof-info__time">Surveys</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── SEMIFINAL — Time de Operação (3 agentes) ── -->
+      <div class="round-block">
+        <div class="round-label">
+          <img class="round-label__bg" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/banner-orange.svg" alt="" />
+          <div class="round-label__inner">
+            <p class="round-label__name">SEMIFINAL</p>
+            <p class="round-label__date">
+              <span class="sep">|</span>
+              <span class="date"> 23 a 24 de junho</span>
+            </p>
+          </div>
+        </div>
+        <div class="field-card field-card--semifinal">
+          <img class="field-card__bg" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/field-bg.webp" alt="" />
+          <ul class="profs-list">
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/chris.png" alt="Agente de Processos" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Processos</p>
+                <p class="prof-info__name">Agente de <strong>Processos</strong></p>
+                <p class="prof-info__time">BPMS</p>
+              </div>
+            </li>
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/igor.png" alt="Agente de Problemas Operacionais" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Problemas Op.</p>
+                <p class="prof-info__name">Agente de <strong>Problemas</strong></p>
+                <p class="prof-info__time">Diagnóstico</p>
+              </div>
+            </li>
+            <li class="prof-item">
+              <div class="prof-avatar"><img src="img/olivia.png" alt="Agente de Reuniões" /></div>
+              <div class="prof-info">
+                <p class="prof-info__subject">Reuniões</p>
+                <p class="prof-info__name">Agente de <strong>Reuniões</strong></p>
+                <p class="prof-info__time">Atas + Ações</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── FINAL — O Comercial entra em campo + Olívia coordenando ── -->
+      <div class="round-block">
+        <div class="round-label">
+          <img class="round-label__bg" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/banner-red.svg" alt="" />
+          <div class="round-label__inner" style="padding: 0 40px;">
+            <img src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/star.svg" alt="" style="height: 44px; width: 44px;" />
+            <p class="round-label__name">FINAL</p>
+            <p class="round-label__date">
+              <span class="sep">|</span>
+              <span class="date"> 25 de junho · 18h</span>
+            </p>
+            <img src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/star.svg" alt="" style="height: 44px; width: 44px;" />
+          </div>
+        </div>
+        <div class="field-card field-card--final">
+          <img class="field-card__bg" src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/field-bg.webp" alt="" />
+          <div class="final-content">
+            <img class="final-trophy" src="img/troofeu.png" alt="Troféu Craques do Orbit" />
+            <div class="final-info">
+              <img class="final-host" src="img/igor.png" alt="Igor Furniel" />
+              <div>
+                <p class="final-info__title">DIA DO CONSULTOR</p>
+                <p class="final-info__subtitle">AULA AO VIVO COM IGOR FURNIEL</p>
+              </div>
+              <img src="https://aprovatotal.com.br/lp/images/craques-enem/escalacao/arrow-down.svg" alt="" style="height: 76px; width: auto;" />
+              <p class="final-info__text">
+                <span class="highlight">25 de junho, quinta, às 18h:</span><br>
+                <strong>60min</strong> aula do Igor Furniel · <strong>45min</strong> de depoimentos dos 3 maiores canais Orbit · <strong>15min</strong> pitch exclusivo com <strong>10% de desconto</strong> + prêmio pro maior artilheiro.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botão CTA interno -->
+      <a href="#topo" class="btn-cta-yellow">
+        Quero ser um Craque da Gestão
+      </a>
+    </div>
+  </section>
+
+  <div class="stripe"></div>
+
+  <!-- ════════════════════════════════════════════
+       SEÇÃO – CRAQUES QUE JÁ JOGAM COM A ORBIT (Depoimentos Vimeo)
+  ════════════════════════════════════════════ -->
+  <section class="section-cases">
+    <div class="section-cases__bg-wrapper">
+      <img class="section-cases__bg" src="img/comemoracao-vertical.png" alt="" />
+    </div>
+    <div class="section-cases__inner">
+      <p class="handwritten-green" style="color: var(--yellow);">QUEM JÁ ESTÁ NO TIME...</p>
+      <h2 class="section-cases__heading">
+        <span class="line-white">CRAQUES QUE JÁ</span>
+        <span class="line-yellow">JOGAM COM A</span>
+        <span class="line-green">ORBIT.</span>
+      </h2>
+      <p style="font-family: 'Poppins', sans-serif; font-size: 18px; color: rgba(255,255,255,0.85); max-width: 700px; margin: 0 auto 48px; line-height: 1.6;">
+        Empresas reais que entraram pro Time Olívia e mudaram o jogo da gestão.
+        <strong style="color: var(--yellow);">Estes são alguns dos depoimentos.</strong>
+      </p>
+      <ul class="cases-grid">
+        <li class="case-card">
+          <div class="case-card__video">
+            <iframe src="https://player.vimeo.com/video/1194123078?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="Case Lucineia Pedrosa · Econtech Consultoria"></iframe>
+          </div>
+          <div class="case-card__info">
+            <p class="case-card__name">Lucineia Pedrosa</p>
+            <p class="case-card__company">Econtech Consultoria</p>
+          </div>
+        </li>
+        <li class="case-card">
+          <div class="case-card__video">
+            <iframe src="https://player.vimeo.com/video/1194124564?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="Case Hygor Limar · Potencialize Resultados"></iframe>
+          </div>
+          <div class="case-card__info">
+            <p class="case-card__name">Hygor Limar</p>
+            <p class="case-card__company">Potencialize Resultados</p>
+          </div>
+        </li>
+        <li class="case-card">
+          <div class="case-card__video">
+            <iframe src="https://player.vimeo.com/video/1194125389?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="Case Bruno Lozano · Ritual de Gestão"></iframe>
+          </div>
+          <div class="case-card__info">
+            <p class="case-card__name">Bruno Lozano</p>
+            <p class="case-card__company">Ritual de Gestão</p>
+          </div>
+        </li>
+        <li class="case-card">
+          <div class="case-card__video">
+            <iframe src="https://player.vimeo.com/video/1194126879?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="Case Rogério Menossi · Time Produtivo"></iframe>
+          </div>
+          <div class="case-card__info">
+            <p class="case-card__name">Rogério Menossi</p>
+            <p class="case-card__company">Time Produtivo</p>
+          </div>
+        </li>
+      </ul>
+      <a href="#inscricao" class="btn-cta-yellow" style="margin-top: 48px;">
+        Quero ser o próximo craque
+      </a>
+    </div>
+  </section>
+
+  <!-- Faixa de comemoração (preenche o espaço atrás do formulário fixo) -->
+  <section class="cta-band"></section>
+</main>
+
+<!-- ════════════════════════════════════════════
+     RODAPÉ
+════════════════════════════════════════════ -->
+<footer style="background:#f4ece3; text-align:center; position:relative;">
+  <div class="stripe"></div>
+  <div style="max-width:1100px; margin:0 auto; padding:60px 20px; display:flex; flex-direction:column; align-items:center; gap:24px;">
+    <div style="position:relative; display:flex; align-items:center; justify-content:center; width:100%;">
+      <img src="https://aprovatotal.com.br/lp/images/craques-enem/section5-stars.svg" alt="" style="position:absolute; top:-26px; width:90%; max-width:785px; height:42px;" />
+      <p style="position:relative; font-family:'Caveat',cursive; font-size:clamp(26px,4vw,56px); font-weight:700; color:#0033a0; line-height:0.95;">
+        SE TORNE UM CRAQUE DA GESTÃO
+      </p>
+    </div>
+    <p style="font-family:'Caveat',cursive; font-size:clamp(26px,4vw,56px); font-weight:700; color:#0e8a3e; line-height:0.95;">
+      E LEVE SUA EMPRESA<br>PARA OUTRO NÍVEL
+    </p>
+    <img src="https://aprovatotal.com.br/lp/images/craques-enem/section5-underline.svg" alt="" style="height:28px; width:203px;" />
+    <img src="data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 32%22%3E%3Ctext x=%220%22 y=%2226%22 font-family=%22Anton, sans-serif%22 font-size=%2228%22 fill=%22%23f7d518%22%3EORBIT%3C/text%3E%3C/svg%3E" alt="Orbit Gestão" style="height:32px; width:auto; margin-top:8px;" />
+    <p style="font-family:'Poppins',sans-serif; font-size:14px; font-weight:500; color:#000; line-height:1.5;">
+      @ORBITGESTAO <strong>·</strong> ORBITGESTAO.COM.BR
+    </p>
+    <a href="/regulamento-craques-da-gestao.pdf" style="font-family:'Poppins',sans-serif; font-size:14px; font-weight:500; color:#0033a0; text-decoration:underline; text-underline-offset:4px;">
+      Regulamento Oficial Craques da Gestão Orbit
+    </a>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════
+     FORMULÁRIO FIXO NO RODAPÉ
+════════════════════════════════════════════ -->
+<div class="sticky-form">
+  <div class="stripe"></div>
+  <div class="sticky-form__body">
+    <div class="sticky-form__inner">
+      <div class="sticky-form__label">
+        <span class="badge-cde">
+          <span class="w-black">CRAQUES</span>
+          <span class="w-green">DA</span>
+          <span class="w-blue">GESTÃO</span>
+        </span>
+        <p class="sticky-form__title">CHEGOU O SEU MOMENTO</p>
+      </div>
+      <form onsubmit="return false;">
+        <div class="form-row">
+          <label class="form-field">
+            <span class="form-field__label">Nome</span>
+            <input type="text" name="fullname" placeholder="Como te chamar" autocomplete="name" />
+          </label>
+          <label class="form-field">
+            <span class="form-field__label">E-mail corporativo</span>
+            <input type="email" name="email" placeholder="seu@empresa.com.br" autocomplete="email" />
+          </label>
+          <label class="form-field">
+            <span class="form-field__label">WhatsApp</span>
+            <input type="tel" name="phone" placeholder="(00) 00000-0000" autocomplete="tel" />
+          </label>
+          <label class="form-field">
+            <span class="form-field__label">Empresa</span>
+            <input type="text" name="company" placeholder="Nome da sua empresa" />
+          </label>
+        </div>
+        <button type="submit" class="btn-submit">
+          QUERO ENTRAR PARA O TIME →
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
