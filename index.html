@@ -653,23 +653,23 @@
         </span>
         <p class="sticky-form__title">CHEGOU O SEU MOMENTO</p>
       </div>
-      <form onsubmit="return false;">
+      <form action="obrigado.html" method="get">
         <div class="form-row">
           <label class="form-field">
             <span class="form-field__label">Nome</span>
-            <input type="text" name="fullname" placeholder="Como te chamar" autocomplete="name" />
+            <input type="text" name="fullname" placeholder="Como te chamar" autocomplete="name" required />
           </label>
           <label class="form-field">
             <span class="form-field__label">E-mail corporativo</span>
-            <input type="email" name="email" placeholder="seu@empresa.com.br" autocomplete="email" />
+            <input type="email" name="email" placeholder="seu@empresa.com.br" autocomplete="email" required />
           </label>
           <label class="form-field">
             <span class="form-field__label">WhatsApp</span>
-            <input type="tel" name="phone" placeholder="(00) 00000-0000" autocomplete="tel" />
+            <input type="tel" name="phone" placeholder="(00) 00000-0000" autocomplete="tel" required />
           </label>
           <label class="form-field">
             <span class="form-field__label">Empresa</span>
-            <input type="text" name="company" placeholder="Nome da sua empresa" />
+            <input type="text" name="company" placeholder="Nome da sua empresa" required />
           </label>
         </div>
         <button type="submit" class="btn-submit">
