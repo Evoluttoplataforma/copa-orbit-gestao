@@ -26,8 +26,8 @@
       --red:          #d62828;
       --orange:       #ff6f00;
     }
-    html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { font-family: 'Poppins', sans-serif; background-color: var(--black); color: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; width: 100%; position: relative; }
+    html { scroll-behavior: smooth; overflow-x: clip; max-width: 100%; }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--black); color: #fff; -webkit-font-smoothing: antialiased; overflow-x: clip; max-width: 100%; width: 100%; position: relative; }
     img { display: block; max-width: 100%; }
     ul { list-style: none; }
     main { background-color: var(--black); padding-bottom: 0; }
@@ -51,6 +51,7 @@
     .hero__text .highlight { color: var(--yellow); font-weight: 700; }
     .hero__date { font-family: 'Poppins', sans-serif; font-size: 18px; display: flex; align-items: center; gap: 8px; color: #fff; }
     .hero__date strong { color: var(--yellow); }
+    .hero__cta { display: none; }
     .section-yellow { position: relative; background-color: var(--yellow); background-image: url('https://aprovatotal.com.br/lp/images/craques-enem/section2-bg.webp'); background-size: cover; background-position: center; padding: 80px; overflow: hidden; }
     .section-yellow__inner { position: relative; z-index: 1; max-width: 1206px; margin: 0 auto; }
     .handwritten-green { font-family: 'Indie Flower', cursive; font-size: 34px; color: var(--green); transform: rotate(-2deg); display: inline-block; line-height: 1; }
@@ -170,6 +171,7 @@
       .hero__overlay { background: linear-gradient(to right, #050505 0%, rgba(6,6,6,0.95) 30%, rgba(8,8,8,0.5) 47%, rgba(0,0,0,0.12) 64%, transparent 78%); }
       .hero__title { font-size: clamp(60px, 7.2vw, 112px); }
       .hero__content { padding: 48px 80px 130px; gap: 22px; }
+      .hero__cta { display: none; }
     }
     /* Notebook com pouca altura: encolhe mais para nada ficar cortado */
     @media (min-width: 769px) and (max-height: 860px) {
@@ -177,6 +179,12 @@
       .hero__content { padding: 36px 80px 112px; gap: 16px; }
       .hero__tag p { font-size: 20px; }
       .hero__text { font-size: 16px; }
+    }
+    /* Monitores grandes: texto mais para o centro/direita, longe do vazio à esquerda */
+    @media (min-width: 1500px) {
+      .hero__content { max-width: none; margin: 0; padding-left: clamp(180px, 23vw, 520px); padding-right: 60px; }
+      .hero__title { font-size: clamp(64px, 5.6vw, 104px); }
+      .hero__overlay { background: linear-gradient(to right, #050505 0%, rgba(6,6,6,0.96) 36%, rgba(8,8,8,0.55) 54%, rgba(0,0,0,0.15) 68%, transparent 82%); }
     }
 
     @media (max-width: 768px) {
@@ -189,6 +197,7 @@
       .hero__tag p { font-size: 18px; }
       .hero__text { font-size: 15px; max-width: 100%; }
       .hero__date { font-size: 14px; flex-wrap: wrap; justify-content: center; }
+      .hero__cta { display: inline-flex; width: 100%; max-width: 360px; margin-top: 8px; font-size: 16px; padding: 16px 18px; }
       .section-yellow { padding: 48px 20px; }
       .handwritten-note { display: none; }
       .features-grid { grid-template-columns: 1fr; }
@@ -255,6 +264,7 @@
       <p class="hero__date">
         📅 Quando? <strong>De 18 a 25 de junho</strong> · 🏆 Aula final: <strong>25/06 às 18h</strong>
       </p>
+      <a href="#inscricao" class="btn-cta-yellow hero__cta">Garantir minha vaga grátis →</a>
     </div>
   </section>
   <div class="stripe"></div>
