@@ -397,6 +397,64 @@
       /* Botão à largura total mantém, mas alinhado à esquerda */
       .hero__cta { align-self: stretch; }
     }
+
+    /* ===== HERO V5: 2026 mais perto + Igor à direita + texto legível ===== */
+    @media (min-width: 769px) {
+      .hero__bg { object-position: 95% center; }
+    }
+    .hero__year-seal { right: 0.02em; bottom: -0.08em; }
+
+    /* Texto do hero mais legível (sombra + leve fundo) */
+    .hero__text {
+      text-shadow: 0 2px 8px rgba(0,0,0,0.85);
+      line-height: 1.65;
+    }
+    .hero__text strong { color: var(--yellow); }
+
+    @media (max-width: 768px) {
+      .hero__bg { object-position: 82% center; }
+      .hero__year-seal { right: 0.05em; bottom: -0.34em; }
+    }
+
+    /* ===== FLUXO V2: cards escuros premium + ícones Lucide ===== */
+    .live-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; }
+    .flow-card {
+      position: relative;
+      background: linear-gradient(160deg, #0a1a4a 0%, var(--black-soft) 100%);
+      border: 1px solid rgba(247,213,24,0.35);
+      border-radius: 18px;
+      padding: 28px 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .flow-card:hover { transform: translateY(-4px); border-color: var(--yellow); }
+    .flow-card__num {
+      position: absolute; top: -14px; left: 22px;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--yellow); color: var(--blue);
+      font-family: 'Anton', sans-serif; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .flow-card__ico {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(247,213,24,0.12);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 6px;
+    }
+    .flow-card__ico svg { width: 28px; height: 28px; color: var(--yellow); stroke-width: 2; }
+    .flow-card__title {
+      font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 700;
+      color: #fff; line-height: 1.3;
+    }
+
+    @media (max-width: 768px) {
+      .live-flow { grid-template-columns: 1fr; gap: 24px; }
+      .flow-card { padding: 26px 20px 22px; }
+    }
   </style>
 </head>
 <body>
@@ -447,37 +505,37 @@
       <ul class="live-flow">
         <li class="flow-card">
           <span class="flow-card__num">1</span>
-          <span class="flow-card__icon">🚀</span>
+          <span class="flow-card__ico"><i data-lucide="rocket"></i></span>
           <p class="flow-card__title">Novo modelo de operação</p>
         </li>
         <li class="flow-card">
           <span class="flow-card__num">2</span>
-          <span class="flow-card__icon">⚙️</span>
+          <span class="flow-card__ico"><i data-lucide="settings-2"></i></span>
           <p class="flow-card__title">Estratégia, método e tecnologia</p>
         </li>
         <li class="flow-card">
           <span class="flow-card__num">3</span>
-          <span class="flow-card__icon">🔄</span>
+          <span class="flow-card__ico"><i data-lucide="refresh-cw"></i></span>
           <p class="flow-card__title">Conhecimento em entrega contínua</p>
         </li>
         <li class="flow-card">
           <span class="flow-card__num">4</span>
-          <span class="flow-card__icon">💻</span>
+          <span class="flow-card__ico"><i data-lucide="laptop"></i></span>
           <p class="flow-card__title">Sem depender do consultor em campo</p>
         </li>
         <li class="flow-card">
           <span class="flow-card__num">5</span>
-          <span class="flow-card__icon">📈</span>
+          <span class="flow-card__ico"><i data-lucide="trending-up"></i></span>
           <p class="flow-card__title">Escala e receita recorrente passiva</p>
         </li>
         <li class="flow-card">
           <span class="flow-card__num">6</span>
-          <span class="flow-card__icon">💡</span>
+          <span class="flow-card__ico"><i data-lucide="lightbulb"></i></span>
           <p class="flow-card__title">Segredos de quem já está nesse modelo</p>
         </li>
         <li class="flow-card">
           <span class="flow-card__num">7</span>
-          <span class="flow-card__icon">🎁</span>
+          <span class="flow-card__ico"><i data-lucide="gift"></i></span>
           <p class="flow-card__title">Condições exclusivas ao final do evento</p>
         </li>
       </ul>
@@ -671,6 +729,11 @@
       }, { threshold: 0.15 }).observe(form);
     }
   })();
+</script>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+  if (window.lucide && typeof lucide.createIcons === 'function') { lucide.createIcons(); }
 </script>
 </body>
 </html>
