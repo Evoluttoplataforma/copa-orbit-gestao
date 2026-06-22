@@ -531,6 +531,52 @@
     /* ===== HERO V7: remove foto de fundo, mantém apenas Igor recortado ===== */
     .hero__bg { display: none !important; }
     .hero { background: linear-gradient(135deg, #050505 0%, #0a1a0a 50%, #050505 100%); }
+
+    /* ===== HERO ESTADO FINAL: só Igor recortado, sem foto de fundo antiga ===== */
+
+    /* Remove a foto de fundo antiga (hero-capa) em TODOS os dispositivos */
+    .hero__bg { display: none !important; }
+
+    /* Fundo escuro de base */
+    .hero { background: linear-gradient(135deg, #050505 0%, #0a1a0a 50%, #050505 100%) !important; }
+
+    /* Igor recortado visível e bem posicionado — desktop */
+    @media (min-width: 769px) {
+      .hero__igor {
+        display: block !important;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        width: auto;
+        max-width: 55%;
+        object-fit: contain;
+        object-position: bottom right;
+        z-index: 1;
+        opacity: 1 !important;
+        pointer-events: none;
+      }
+    }
+
+    /* Igor recortado visível e bem posicionado — mobile */
+    @media (max-width: 768px) {
+      .hero { overflow: hidden; }
+      .hero__igor {
+        display: block !important;
+        position: absolute;
+        right: -10px;
+        bottom: 60px;
+        height: 60%;
+        width: auto;
+        max-width: 55%;
+        object-fit: contain;
+        object-position: bottom right;
+        z-index: 1;
+        opacity: 1 !important;
+        pointer-events: none;
+      }
+      .hero__content { position: relative; z-index: 2; }
+    }
   </style>
 </head>
 <body>
