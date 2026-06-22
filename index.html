@@ -495,6 +495,38 @@
       .hero__igor { display: none; }
       .hero__bg { object-position: 78% center; opacity: 1; }
     }
+
+    /* ===== HERO MOBILE V5: Igor recortado visível no mobile ===== */
+    @media (max-width: 768px) {
+      /* Fundo de torcida mais escuro — Igor recortado vai aparecer por cima */
+      .hero__bg { object-position: 50% center; opacity: 0.5; }
+      .hero__overlay {
+        background: linear-gradient(180deg,
+          rgba(4,4,4,0.60) 0%,
+          rgba(4,4,4,0.45) 40%,
+          rgba(4,4,4,0.90) 100%);
+      }
+
+      /* Igor recortado: aparece no mobile, canto direito, metade inferior */
+      .hero__igor {
+        display: block;
+        position: absolute;
+        right: -20px;
+        bottom: 0;
+        height: 75%;
+        width: auto;
+        max-width: 65%;
+        object-fit: contain;
+        object-position: bottom right;
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+        opacity: 0.92;
+      }
+
+      /* Conteúdo fica à esquerda com z-index acima do Igor */
+      .hero__content { position: relative; z-index: 2; }
+    }
   </style>
 </head>
 <body>
