@@ -231,6 +231,38 @@
       .section-cases { padding: 48px 20px; }
       .cases-grid { grid-template-columns: 1fr; }
     }
+
+    /* ===== MELHORIAS UX/UI ===== */
+
+    /* Hero — eyebrow pequeno + título destacado */
+    .hero__heading { display: flex; flex-direction: column; gap: 8px; }
+    .hero__eyebrow { font-family: 'Anton', sans-serif; font-size: clamp(20px, 3vw, 30px); color: #fff; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; opacity: 0.92; }
+
+    /* Botão azul (alto contraste sobre seções amarelas) */
+    .btn-cta-blue { display: inline-flex; align-items: center; justify-content: center; background: var(--blue); color: #fff; border: none; border-radius: 12px; padding: 16px 28px; font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 800; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: transform 0.15s ease; box-shadow: 0 6px 20px rgba(0,51,160,0.35); }
+    .btn-cta-blue:hover { transform: scale(1.02); }
+    .btn-cta-blue:active { transform: scale(0.99); }
+
+    /* Botão flutuante (some no desktop) */
+    .floating-cta { display: none; }
+
+    @media (max-width: 768px) {
+      .hero__eyebrow { font-size: 18px; }
+      .hero__title { font-size: clamp(50px, 14vw, 68px); }
+      .hero__badge p { font-size: 13px; }
+      .hero__badge { padding: 6px 14px; }
+
+      .btn-cta-blue { width: 100%; }
+
+      /* Carrossel de depoimentos com swipe */
+      .cases-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 16px; padding-bottom: 14px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .cases-grid::-webkit-scrollbar { display: none; }
+      .case-card { flex: 0 0 82%; scroll-snap-align: center; }
+
+      /* Botão flutuante visível no mobile */
+      .floating-cta { display: flex; align-items: center; justify-content: center; position: fixed; left: 14px; right: 14px; bottom: 14px; z-index: 60; background: var(--yellow); color: var(--blue); font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 16px; text-transform: uppercase; text-decoration: none; padding: 16px 18px; border-radius: 14px; box-shadow: 0 10px 28px rgba(0,0,0,0.5); opacity: 0; transform: translateY(140%); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; }
+      .floating-cta.is-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    }
   </style>
 </head>
 <body>
@@ -245,11 +277,13 @@
       <div class="hero__tag">
         <p>VOCÊ FOI CONVOCADO:</p>
       </div>
-      <h1 class="hero__title">
-  <span class="line-white">Live Especial Orbit</span>
-  <span class="word-year">DIA DO CONSULTOR</span>
-  <span class="word-year">2026</span>
-</h1>
+      <div class="hero__heading">
+        <p class="hero__eyebrow">Live Especial Orbit</p>
+        <h1 class="hero__title">
+          <span class="word-year">DIA DO CONSULTOR</span>
+          <span class="word-year">2026</span>
+        </h1>
+      </div>
       <div class="hero__badge">
         <p>25/JUNHO (5ª-FEIRA) · 18H · ONLINE · 100% GRATUITO</p>
       </div>
@@ -274,7 +308,7 @@
       <p class="section-yellow__desc">
         Não tem mistério: é estratégia, método e entrega em tempo real. Nesse evento, você vai entender o futuro da consultoria com quem é referência de mercado, e aprender como operar um modelo que gera receita recorrente passiva mesmo quando você não está em campo. Além disso, quem participar até o final ainda vai ter acesso a condições exclusivas que não estarão disponíveis em nenhum outro momento.
       </p>
-      <a href="#inscricao" class="btn-cta-yellow" style="margin-top: 32px; margin-bottom: 8px;">QUERO GARANTIR MINHA VAGA →</a>
+      <a href="#inscricao" class="btn-cta-blue" style="margin-top: 32px;">QUERO GARANTIR MINHA VAGA →</a>
     </div>
   </section>
   <div class="stripe"></div>
@@ -320,8 +354,6 @@
       </ul>
     </div>
   </section>
-  <div class="stripe"></div>
-
   <div class="stripe"></div>
 
   <!-- ════════════════════════════════════════════
@@ -391,6 +423,8 @@
 <!-- ════════════════════════════════════════════
      FORMULÁRIO FIXO NO RODAPÉ
 ════════════════════════════════════════════ -->
+<a href="#inscricao" class="floating-cta" id="floatingCta">QUERO GARANTIR MINHA VAGA →</a>
+
 <div class="sticky-form" id="inscricao">
   <div class="stripe"></div>
   <div class="sticky-form__body">
@@ -442,6 +476,28 @@
       if (input) setTimeout(function () { input.focus({ preventScroll: true }); }, 450);
     });
   });
+
+  // Botão flutuante: aparece após a primeira dobra e some quando o formulário está visível
+  (function () {
+    var fab = document.getElementById('floatingCta');
+    var form = document.getElementById('inscricao');
+    if (!fab) return;
+    var pastFold = false, formVisible = false;
+    function update() {
+      if (pastFold && !formVisible) fab.classList.add('is-visible');
+      else fab.classList.remove('is-visible');
+    }
+    window.addEventListener('scroll', function () {
+      pastFold = window.scrollY > (window.innerHeight * 0.85);
+      update();
+    }, { passive: true });
+    if (form && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        formVisible = entries[0].isIntersecting;
+        update();
+      }, { threshold: 0.15 }).observe(form);
+    }
+  })();
 </script>
 </body>
 </html>
