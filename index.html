@@ -263,6 +263,29 @@
       .floating-cta { display: flex; align-items: center; justify-content: center; position: fixed; left: 14px; right: 14px; bottom: 14px; z-index: 60; background: var(--yellow); color: var(--blue); font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 16px; text-transform: uppercase; text-decoration: none; padding: 16px 18px; border-radius: 14px; box-shadow: 0 10px 28px rgba(0,0,0,0.5); opacity: 0; transform: translateY(140%); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; }
       .floating-cta.is-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
     }
+
+    /* ===== REFINAMENTOS VISUAIS ===== */
+
+    /* Selo "VOCÊ FOI CONVOCADO" — estilo translúcido com borda (harmoniza com o badge) */
+    .hero__tag { background: rgba(4,4,4,0.55); border: 1px solid var(--yellow); border-radius: 10px; padding: 6px 14px; backdrop-filter: blur(2px); }
+    .hero__tag p { color: var(--yellow); }
+
+    /* Badge da data — fundo escuro translúcido em vez do alaranjado */
+    .hero__badge { background: rgba(4,4,4,0.55); backdrop-filter: blur(2px); }
+
+    /* Botões nunca quebram texto/seta em duas linhas */
+    .btn-cta-yellow, .btn-cta-blue, .btn-submit, .floating-cta { white-space: nowrap; }
+
+    /* Texto cursivo dos cards de stats — mais claro e legível */
+    .title-card__sub { color: #8ee6a6; }
+
+    @media (max-width: 768px) {
+      /* Headline da seção amarela — reduz para não quebrar feio */
+      .section-yellow__title { font-size: clamp(34px, 9vw, 46px); }
+
+      /* Botões de seção com texto/seta cabendo bem */
+      .btn-cta-yellow, .btn-cta-blue { font-size: 16px; padding: 16px 20px; }
+    }
   </style>
 </head>
 <body>
