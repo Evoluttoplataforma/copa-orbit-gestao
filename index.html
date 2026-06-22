@@ -361,6 +361,42 @@
       }
       .hero__year-seal { font-size: clamp(40px, 13vw, 60px); right: -0.1em; bottom: -0.25em; }
     }
+
+    /* ===== HERO MOBILE V4 (correção definitiva) ===== */
+    @media (max-width: 768px) {
+      /* Conteúdo alinhado à esquerda (como no desktop) */
+      .hero__content { align-items: flex-start; text-align: left; padding: 36px 22px 48px; gap: 16px; }
+      .hero__text { text-align: left; max-width: 100%; }
+
+      /* Foto: Igor mais ao fundo, liberando área escura à esquerda para o texto */
+      .hero__bg { object-position: 78% center; }
+      .hero__overlay {
+        background: linear-gradient(180deg,
+          rgba(4,4,4,0.78) 0%,
+          rgba(4,4,4,0.62) 45%,
+          rgba(4,4,4,0.92) 100%);
+      }
+
+      /* "2026" branco, com contorno escuro, cruzando mais o fim de CONSULTOR */
+      .hero__year-seal {
+        color: #fff;
+        font-size: clamp(38px, 12vw, 56px);
+        right: -0.05em;
+        bottom: -0.42em;
+        transform: rotate(-9deg);
+        text-shadow: 2px 2px 0 rgba(0,0,0,0.7), -1px -1px 0 rgba(0,0,0,0.5);
+      }
+
+      /* Badge da data: não quebrar feio, alinhar à esquerda */
+      .hero__badge { align-self: flex-start; }
+      .hero__badge p { font-size: 12px; line-height: 1.4; }
+
+      /* Selo "VOCÊ FOI CONVOCADO" alinhado à esquerda */
+      .hero__tag { align-self: flex-start; }
+
+      /* Botão à largura total mantém, mas alinhado à esquerda */
+      .hero__cta { align-self: stretch; }
+    }
   </style>
 </head>
 <body>
