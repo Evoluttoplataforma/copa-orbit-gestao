@@ -286,6 +286,33 @@
       /* Botões de seção com texto/seta cabendo bem */
       .btn-cta-yellow, .btn-cta-blue { font-size: 16px; padding: 16px 20px; }
     }
+
+    /* ===== HERO V2: carimbo + selo de ano ===== */
+    .hero__tag { transform: rotate(-3deg); border: 3px solid var(--green); border-radius: 6px; background: transparent; padding: 6px 16px; backdrop-filter: none; }
+    .hero__tag p { color: var(--green); font-weight: 400; letter-spacing: 0.08em; text-shadow: none; }
+    .hero__title-row { display: flex; align-items: flex-start; gap: 18px; flex-wrap: wrap; }
+    .hero__year-seal { display: inline-flex; align-items: center; justify-content: center; transform: rotate(-8deg); background: #fff; color: var(--black-soft); font-family: 'Anton', sans-serif; font-size: clamp(28px, 4vw, 46px); line-height: 1; padding: 8px 18px; border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); margin-top: 6px; }
+
+    /* ===== FLUXO DA LIVE (7 etapas) ===== */
+    .live-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
+    .flow-card { position: relative; background: var(--yellow-light); border: 3px solid var(--blue); border-radius: 18px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; }
+    .flow-card__num { position: absolute; top: -16px; left: 20px; width: 36px; height: 36px; border-radius: 50%; background: var(--blue); color: #fff; font-family: 'Anton', sans-serif; font-size: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.25); }
+    .flow-card__icon { font-size: 34px; line-height: 1; margin-top: 6px; }
+    .flow-card__title { font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 800; color: var(--blue-dark); line-height: 1.25; }
+
+    @media (max-width: 768px) {
+      .hero__tag { font-size: 14px; }
+      .hero__year-seal { font-size: 30px; padding: 6px 14px; }
+      .hero__title-row { gap: 12px; justify-content: center; }
+      .live-flow { grid-template-columns: 1fr; gap: 22px; }
+      .flow-card { padding: 22px 18px; }
+    }
+
+    /* Recorte do hero no mobile — Igor mais visível e overlay mais escuro */
+    @media (max-width: 768px) {
+      .hero__bg { object-position: 65% center; }
+      .hero__overlay { background: linear-gradient(180deg, rgba(4,4,4,0.55) 0%, rgba(4,4,4,0.45) 35%, rgba(4,4,4,0.88) 100%); }
+    }
   </style>
 </head>
 <body>
@@ -302,10 +329,12 @@
       </div>
       <div class="hero__heading">
         <p class="hero__eyebrow">Live Especial Orbit</p>
-        <h1 class="hero__title">
-          <span class="word-year">DIA DO CONSULTOR</span>
-          <span class="word-year">2026</span>
-        </h1>
+        <div class="hero__title-row">
+          <h1 class="hero__title">
+            <span class="word-year">DIA DO CONSULTOR</span>
+          </h1>
+          <span class="hero__year-seal">2026</span>
+        </div>
       </div>
       <div class="hero__badge">
         <p>25/JUNHO (5ª-FEIRA) · 18H · ONLINE · 100% GRATUITO</p>
@@ -329,8 +358,45 @@
         <span class="line-green">COPA DO MUNDO!</span>
       </h2>
       <p class="section-yellow__desc">
-        Não tem mistério: é estratégia, método e entrega em tempo real. Nesse evento, você vai entender o futuro da consultoria com quem é referência de mercado, e aprender como operar um modelo que gera receita recorrente passiva mesmo quando você não está em campo. Além disso, quem participar até o final ainda vai ter acesso a condições exclusivas que não estarão disponíveis em nenhum outro momento.
+        Nesse evento você vai entender, passo a passo, como operar uma consultoria que gera receita recorrente passiva:
       </p>
+      <ul class="live-flow">
+        <li class="flow-card">
+          <span class="flow-card__num">1</span>
+          <span class="flow-card__icon">🚀</span>
+          <p class="flow-card__title">Novo modelo de operação</p>
+        </li>
+        <li class="flow-card">
+          <span class="flow-card__num">2</span>
+          <span class="flow-card__icon">⚙️</span>
+          <p class="flow-card__title">Estratégia, método e tecnologia</p>
+        </li>
+        <li class="flow-card">
+          <span class="flow-card__num">3</span>
+          <span class="flow-card__icon">🔄</span>
+          <p class="flow-card__title">Conhecimento em entrega contínua</p>
+        </li>
+        <li class="flow-card">
+          <span class="flow-card__num">4</span>
+          <span class="flow-card__icon">💻</span>
+          <p class="flow-card__title">Sem depender do consultor em campo</p>
+        </li>
+        <li class="flow-card">
+          <span class="flow-card__num">5</span>
+          <span class="flow-card__icon">📈</span>
+          <p class="flow-card__title">Escala e receita recorrente passiva</p>
+        </li>
+        <li class="flow-card">
+          <span class="flow-card__num">6</span>
+          <span class="flow-card__icon">💡</span>
+          <p class="flow-card__title">Segredos de quem já está nesse modelo</p>
+        </li>
+        <li class="flow-card">
+          <span class="flow-card__num">7</span>
+          <span class="flow-card__icon">🎁</span>
+          <p class="flow-card__title">Condições exclusivas ao final do evento</p>
+        </li>
+      </ul>
       <a href="#inscricao" class="btn-cta-blue" style="margin-top: 32px;">QUERO GARANTIR MINHA VAGA →</a>
     </div>
   </section>
