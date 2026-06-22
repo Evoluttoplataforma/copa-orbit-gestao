@@ -577,6 +577,41 @@
       }
       .hero__content { position: relative; z-index: 2; }
     }
+
+    /* ===== HERO RESET DEFINITIVO (estado final — prioridade máxima) ===== */
+
+    /* Esconde o Igor recortado em TODOS os dispositivos */
+    .hero__igor { display: none !important; }
+
+    /* Restaura a foto de capa (hero-capa) em TODOS os dispositivos */
+    .hero__bg { display: block !important; opacity: 1 !important; }
+
+    /* Remove qualquer fundo chapado aplicado antes — deixa a foto aparecer */
+    .hero { background-color: var(--black-soft) !important; background-image: none !important; }
+
+    /* DESKTOP: foto puxada à direita, texto sobre área escura à esquerda */
+    @media (min-width: 769px) {
+      .hero__bg { object-position: 80% center !important; opacity: 1 !important; }
+      .hero__overlay {
+        background: linear-gradient(to right,
+          #050505 0%,
+          rgba(6,6,6,0.92) 30%,
+          rgba(8,8,8,0.5) 47%,
+          rgba(0,0,0,0.12) 64%,
+          transparent 78%) !important;
+      }
+    }
+
+    /* MOBILE: foto posicionada pra mostrar o rosto, overlay forte pra texto legível */
+    @media (max-width: 768px) {
+      .hero__bg { object-position: 72% center !important; opacity: 1 !important; }
+      .hero__overlay {
+        background: linear-gradient(180deg,
+          rgba(4,4,4,0.78) 0%,
+          rgba(4,4,4,0.62) 42%,
+          rgba(4,4,4,0.92) 100%) !important;
+      }
+    }
   </style>
 </head>
 <body>
