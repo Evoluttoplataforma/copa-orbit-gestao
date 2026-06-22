@@ -313,6 +313,54 @@
       .hero__bg { object-position: 65% center; }
       .hero__overlay { background: linear-gradient(180deg, rgba(4,4,4,0.55) 0%, rgba(4,4,4,0.45) 35%, rgba(4,4,4,0.88) 100%); }
     }
+
+    /* ===== HERO V3: foto à direita + texto à esquerda + 2026 manuscrito ===== */
+
+    /* Desktop: foto puxada pra direita, texto livre à esquerda */
+    @media (min-width: 769px) {
+      .hero__bg { object-position: 88% center; }
+      .hero__overlay {
+        background: linear-gradient(to right,
+          #050505 0%,
+          rgba(5,5,5,0.92) 32%,
+          rgba(5,5,5,0.55) 50%,
+          rgba(0,0,0,0.15) 66%,
+          transparent 80%);
+      }
+      .hero__content { padding-right: 40px; }
+      .hero__heading, .hero__text, .hero__tag, .hero__badge { max-width: 620px; }
+    }
+
+    /* Título "DIA DO CONSULTOR" + selo 2026 manuscrito cruzando o fim */
+    .hero__title-row { position: relative; display: inline-block; }
+    .hero__year-seal {
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      color: var(--yellow);
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0;
+      transform: rotate(-8deg);
+      font-size: clamp(46px, 6vw, 86px);
+      line-height: 1;
+      position: absolute;
+      right: -0.2em;
+      bottom: -0.15em;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.55);
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .hero__bg { object-position: 70% center; }
+      .hero__overlay {
+        background: linear-gradient(180deg,
+          rgba(4,4,4,0.55) 0%,
+          rgba(4,4,4,0.40) 35%,
+          rgba(4,4,4,0.88) 100%);
+      }
+      .hero__year-seal { font-size: clamp(40px, 13vw, 60px); right: -0.1em; bottom: -0.25em; }
+    }
   </style>
 </head>
 <body>
@@ -333,7 +381,7 @@
           <h1 class="hero__title">
             <span class="word-year">DIA DO CONSULTOR</span>
           </h1>
-          <span class="hero__year-seal">2026</span>
+          <span class="hero__year-seal" aria-hidden="true">2026</span>
         </div>
       </div>
       <div class="hero__badge">
