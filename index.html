@@ -455,6 +455,46 @@
       .live-flow { grid-template-columns: 1fr; gap: 24px; }
       .flow-card { padding: 26px 20px 22px; }
     }
+
+    /* ===== HERO V6: Igor recortado como elemento separado ===== */
+
+    /* Esconde o fundo atual no desktop — vamos usar só no mobile */
+    .hero__igor {
+      display: none;
+    }
+
+    /* Desktop: Igor recortado posicionado à direita */
+    @media (min-width: 769px) {
+      .hero__bg { object-position: center center; opacity: 0.35; }
+      .hero__overlay {
+        background: linear-gradient(to right,
+          #050505 0%,
+          rgba(5,5,5,0.96) 28%,
+          rgba(5,5,5,0.7) 44%,
+          rgba(0,0,0,0.2) 62%,
+          transparent 78%);
+      }
+      .hero__igor {
+        display: block;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        width: auto;
+        max-width: 55%;
+        object-fit: contain;
+        object-position: bottom right;
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+      }
+    }
+
+    /* Mobile: mantém o fundo atual, sem Igor recortado por cima */
+    @media (max-width: 768px) {
+      .hero__igor { display: none; }
+      .hero__bg { object-position: 78% center; opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -465,6 +505,7 @@
   <section class="hero">
     <img class="hero__bg" src="img/hero-capa.webp" alt="" />
     <div class="hero__overlay"></div>
+    <img class="hero__igor" src="img/igor-recortado.webp" alt="Igor Furniel" />
     <div class="hero__content">
       <div class="hero__tag">
         <p>VOCÊ FOI CONVOCADO:</p>
