@@ -853,7 +853,20 @@
         </span>
         <p class="sticky-form__title">DIA DO CONSULTOR 2026</p>
       </div>
-      <form action="obrigado.html" method="get">
+      <form id="registrationForm" action="obrigado.html" method="get">
+        <!-- Honeypot anti-spam: oculto via style inline, não toca no CSS -->
+        <input type="text" name="_hp" value="" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;tab-index:-1;" autocomplete="off" aria-hidden="true" />
+        <!-- Hidden fields: tracking e identificadores -->
+        <input type="hidden" name="campaign_id"   id="h_campaign_id" />
+        <input type="hidden" name="submission_id" id="h_submission_id" />
+        <input type="hidden" name="landing_page"  id="h_landing_page" />
+        <input type="hidden" name="utm_source"    id="h_utm_source" />
+        <input type="hidden" name="utm_medium"    id="h_utm_medium" />
+        <input type="hidden" name="utm_campaign"  id="h_utm_campaign" />
+        <input type="hidden" name="utm_content"   id="h_utm_content" />
+        <input type="hidden" name="utm_term"      id="h_utm_term" />
+        <input type="hidden" name="fbclid"        id="h_fbclid" />
+        <input type="hidden" name="gclid"         id="h_gclid" />
         <div class="form-row">
           <label class="form-field">
             <span class="form-field__label">Nome</span>
@@ -872,9 +885,10 @@
             <input type="text" name="company" placeholder="Nome da sua consultoria" required />
           </label>
         </div>
-        <button type="submit" class="btn-submit">
+        <button type="submit" id="btnSubmit" class="btn-submit">
           QUERO GARANTIR MINHA VAGA →
         </button>
+        <p id="formError" style="display:none;color:#ff6f00;font-size:14px;margin-top:10px;font-weight:600;text-align:center;"></p>
       </form>
     </div>
   </div>
@@ -919,6 +933,113 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
   if (window.lucide && typeof lucide.createIcons === 'function') { lucide.createIcons(); }
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  var CAMPAIGN_ID = 'live-dia-consultor-2026';
+  var TRACKING_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
+
+  // ── Gera submission_id UMA VEZ por carregamento de página ──────────────────
+  function generateUUID() {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+    // Fallback para browsers antigos
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0;
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+  var submissionId = generateUUID();
+
+  // ── Lê UTMs/fbclid/gclid da query string e persiste em sessionStorage ──────
+  var params = new URLSearchParams(window.location.search);
+  var tracking = {};
+  TRACKING_KEYS.forEach(function (key) {
+    var val = params.get(key) || sessionStorage.getItem('trk_' + key) || '';
+    if (val) {
+      tracking[key] = val;
+      sessionStorage.setItem('trk_' + key, val);
+    }
+  });
+
+  // ── Preenche hidden inputs ──────────────────────────────────────────────────
+  function setHidden(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.value = val || '';
+  }
+
+  setHidden('h_campaign_id',   CAMPAIGN_ID);
+  setHidden('h_submission_id', submissionId);
+  setHidden('h_landing_page',  location.origin + location.pathname);
+  TRACKING_KEYS.forEach(function (key) {
+    setHidden('h_' + key, tracking[key] || '');
+  });
+
+  // ── Submit: fetch POST → /api/live-registration ────────────────────────────
+  var form    = document.getElementById('registrationForm');
+  var btn     = document.getElementById('btnSubmit');
+  var errEl   = document.getElementById('formError');
+  var origTxt = btn ? btn.textContent : '';
+
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Reatualiza os hiddens (garante valores no retry com mesmo submission_id)
+    setHidden('h_campaign_id',   CAMPAIGN_ID);
+    setHidden('h_submission_id', submissionId);
+    setHidden('h_landing_page',  location.origin + location.pathname);
+    TRACKING_KEYS.forEach(function (key) {
+      setHidden('h_' + key, tracking[key] || '');
+    });
+
+    // Estado visual "enviando"
+    if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
+    if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+
+    var data = {
+      fullname:      (form.elements['fullname']  || {}).value || '',
+      email:         (form.elements['email']     || {}).value || '',
+      phone:         (form.elements['phone']     || {}).value || '',
+      company:       (form.elements['company']   || {}).value || '',
+      _hp:           (form.elements['_hp']       || {}).value || '',
+      campaign_id:   CAMPAIGN_ID,
+      submission_id: submissionId,
+      landing_page:  location.origin + location.pathname,
+    };
+    TRACKING_KEYS.forEach(function (key) {
+      data[key] = tracking[key] || '';
+    });
+
+    fetch('/api/live-registration', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(data),
+    })
+      .then(function (res) { return res.json().then(function (j) { return { status: res.status, body: j }; }); })
+      .then(function (r) {
+        if (r.body.ok) {
+          window.location.href = r.body.redirect || '/obrigado.html';
+        } else {
+          var msg = r.body.error || 'Erro ao enviar. Tente novamente.';
+          if (r.body.fields) {
+            msg = Object.values(r.body.fields).join(' ');
+          }
+          if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; }
+          if (btn)   { btn.disabled = false; btn.textContent = origTxt; }
+        }
+      })
+      .catch(function () {
+        if (errEl) { errEl.textContent = 'Erro de conexão. Verifique sua internet e tente novamente.'; errEl.style.display = 'block'; }
+        if (btn)   { btn.disabled = false; btn.textContent = origTxt; }
+      });
+  });
+})();
 </script>
 </body>
 </html>
