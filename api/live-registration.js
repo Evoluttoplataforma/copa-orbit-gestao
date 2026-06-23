@@ -6,6 +6,7 @@ import crypto from 'node:crypto';
 import { createPipedriveRecord } from './_lib/pipedrive.js';
 import { subscribeAndTag }        from './_lib/mailchimp.js';
 import { linkAndTag }               from './_lib/manychat.js';
+import { sendConversions }           from './_lib/tracking.js';
 
 // ─── Rate limit em memória (reinicia a cada cold start) ───────────────────────
 const RATE_WINDOW_MS = 10 * 60 * 1000; // 10 min
@@ -156,7 +157,7 @@ export default async function handler(req, res) {
   const leadKeyHash     = crypto.createHash('sha256').update(leadKey).digest('hex').slice(0, 16);
 
   // Allowlist de campos opcionais de tracking
-  const TRACKING_FIELDS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid','landing_page'];
+  const TRACKING_FIELDS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid','landing_page','client_id','fbp'];
   const tracking = {};
   for (const f of TRACKING_FIELDS) {
     if (body[f] !== undefined && body[f] !== '') tracking[f] = String(body[f]).slice(0, 500);
@@ -257,8 +258,35 @@ export default async function handler(req, res) {
     }
   }
 
-  // ── TODO Fase 5: Meta CAPI — enviar evento Lead com submission_id como event_id
-  // await sendMetaCAPI({ event_id: submissionId, email: emailRaw, phone: normalizedPhone, ...tracking });
+  // ── Fase 5: Tracking server-side (best-effort) ───────────────────────────
+  const ENABLE_TRACKING = process.env.ENABLE_TRACKING === 'true';
+  let   trackingResult  = { meta: 'skipped', ga4: 'skipped' };
+
+  if (ENABLE_TRACKING) {
+    try {
+      trackingResult = await sendConversions({
+        email:       emailRaw,
+        phone:       normalizedPhone,
+        fbclid:      tracking.fbclid      || '',
+        fbp:         tracking.fbp         || '',
+        clientId:    tracking.client_id   || '',
+        clientIp:    (req.headers['x-forwarded-for'] || '').split(',')[0].trim(),
+        userAgent:   req.headers['user-agent'] || '',
+        submissionId,
+        landingPage: tracking.landing_page || '',
+        params:      { ...tracking, campaign_id: campaignId },
+      });
+    } catch (err) {
+      console.log(JSON.stringify({
+        level:         'warn',
+        event:         'tracking_failed',
+        submission_id: submissionId,
+        lead_key_hash: leadKeyHash,
+        error:         err.message,
+      }));
+      trackingResult = { meta: 'retry', ga4: 'retry' };
+    }
+  }
 
   // ── Log pós-integração ────────────────────────────────────────────────────
   console.log(JSON.stringify({
@@ -269,6 +297,7 @@ export default async function handler(req, res) {
     pipedrive:     pipedriveResult,
     mailchimp:     mailchimpResult,
     manychat:      manychatResult,
+    tracking:      trackingResult,
   }));
 
   // ── Resposta de sucesso ──
@@ -278,6 +307,6 @@ export default async function handler(req, res) {
     lead_key_hash:  leadKeyHash,
     submission_id:  submissionId,
     redirect:       '/obrigado.html',
-    integrations:   { pipedrive: pipedriveResult, mailchimp: mailchimpResult, manychat: manychatResult },
+    integrations:   { pipedrive: pipedriveResult, mailchimp: mailchimpResult, manychat: manychatResult, tracking: trackingResult },
   }));
 }

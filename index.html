@@ -979,6 +979,16 @@
     setHidden('h_' + key, tracking[key] || '');
   });
 
+  // ── Lê cookies para rastreamento server-side ─────────────────────────────
+  function getCookie(name) {
+    var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return v ? decodeURIComponent(v[2]) : '';
+  }
+  function getGaClientId() {
+    var parts = getCookie('_ga').split('.');
+    return parts.length >= 4 ? parts.slice(-2).join('.') : '';
+  }
+
   // ── Submit: fetch POST → /api/live-registration ────────────────────────────
   var form    = document.getElementById('registrationForm');
   var btn     = document.getElementById('btnSubmit');
@@ -1015,6 +1025,8 @@
     TRACKING_KEYS.forEach(function (key) {
       data[key] = tracking[key] || '';
     });
+    data.client_id = getGaClientId();
+    data.fbp       = getCookie('_fbp');
 
     fetch('/api/live-registration', {
       method:  'POST',
