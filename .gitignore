@@ -1,2 +1,11 @@
 .DS_Store
 *.bak.png
+
+# Secrets — nunca commitar
+.env.local
+
+# Dependências
+node_modules/
+
+# Saídas dos scripts de discovery (só JSON bruto, pode conter IDs sensíveis)
+discovery/output/

@@ -5,5 +5,10 @@
   "engines": {
     "node": ">=20"
   },
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "discover:pipedrive": "node --env-file=.env.local scripts/pipedrive-discovery.js",
+    "discover:mailchimp": "node --env-file=.env.local scripts/mailchimp-discovery.js",
+    "discover:manychat":  "node --env-file=.env.local scripts/manychat-discovery.js"
+  }
 }
