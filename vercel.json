@@ -1,8 +1,3 @@
 {
-  "functions": {
-    "api/live-registration.js": {
-      "runtime": "nodejs18.x",
-      "regions": ["gru1"]
-    }
-  }
+  "regions": ["gru1"]
 }

@@ -70,21 +70,37 @@ export default async function handler(req, res) {
     return res.end(JSON.stringify({ ok: false, error: 'Too many requests' }));
   }
 
-  // ── Tamanho do body (8 KB) ──
+  // ── Leitura e parse do body ──
+  // O runtime da Vercel pode já ter parseado req.body (objeto ou string).
+  // Só lemos o stream como fallback quando req.body está ausente.
   const MAX_BYTES = 8 * 1024;
-  let rawBody = '';
-  for await (const chunk of req) {
-    rawBody += chunk;
-    if (Buffer.byteLength(rawBody) > MAX_BYTES) {
+  let body;
+  try {
+    if (req.body !== undefined && req.body !== null) {
+      // Vercel já parseou: pode ser objeto ou string
+      body = (typeof req.body === 'object') ? req.body : JSON.parse(req.body);
+    } else {
+      // Fallback: lê stream manualmente
+      let raw = '';
+      for await (const chunk of req) {
+        raw += chunk;
+        if (Buffer.byteLength(raw) > MAX_BYTES) {
+          res.writeHead(413, corsHeaders(allowedOrigin));
+          return res.end(JSON.stringify({ ok: false, error: 'Payload too large' }));
+        }
+      }
+      if (!raw) {
+        res.writeHead(400, corsHeaders(allowedOrigin));
+        return res.end(JSON.stringify({ ok: false, error: 'Empty body' }));
+      }
+      body = JSON.parse(raw);
+    }
+
+    // Verifica tamanho mesmo quando veio via req.body (serializa para medir)
+    if (Buffer.byteLength(JSON.stringify(body)) > MAX_BYTES) {
       res.writeHead(413, corsHeaders(allowedOrigin));
       return res.end(JSON.stringify({ ok: false, error: 'Payload too large' }));
     }
-  }
-
-  // ── Parse JSON ──
-  let body;
-  try {
-    body = JSON.parse(rawBody);
   } catch {
     res.writeHead(400, corsHeaders(allowedOrigin));
     return res.end(JSON.stringify({ ok: false, error: 'Invalid JSON' }));
