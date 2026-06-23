@@ -9,6 +9,13 @@ const STAGE_ID    = process.env.PIPEDRIVE_STAGE_ID       || '';
 const LABEL_ID    = process.env.PIPEDRIVE_LABEL_ID       || '';
 const OWNER_ID    = process.env.PIPEDRIVE_OWNER_ID       || '';
 
+// Chaves de campos customizados de UTM — preenchidas após rodar create:pdfields
+const FIELD_CAMPAIGN_ID  = process.env.PIPEDRIVE_FIELD_CAMPAIGN_ID  || '';
+const FIELD_UTM_SOURCE   = process.env.PIPEDRIVE_FIELD_UTM_SOURCE   || '';
+const FIELD_UTM_MEDIUM   = process.env.PIPEDRIVE_FIELD_UTM_MEDIUM   || '';
+const FIELD_UTM_CAMPAIGN = process.env.PIPEDRIVE_FIELD_UTM_CAMPAIGN || '';
+const FIELD_GCLID        = process.env.PIPEDRIVE_FIELD_GCLID        || '';
+
 const BASE              = `https://${DOMAIN}.pipedrive.com/api/v1`;
 const TIMEOUT_MS        = 8_000;
 const DEAL_TITLE_PREFIX = 'Live Dia do Consultor 2026 —';
@@ -158,7 +165,7 @@ async function linkPersonToOrg(personId, orgId) {
 
 // ── Deal (dedup prefixo de título → criar, com fallback de label) ─────────────────
 
-async function resolveOrCreateDeal(personId, orgId, title) {
+async function resolveOrCreateDeal(personId, orgId, title, { campaignId = '', tracking = {} } = {}) {
   // Dedup: deal aberto que já pertença a esta campanha
   const dealsRes = await pdGet(`/persons/${personId}/deals`, { status: 'open', limit: 500 });
   if (Array.isArray(dealsRes.data)) {
@@ -177,6 +184,13 @@ async function resolveOrCreateDeal(personId, orgId, title) {
     stage_id:    Number(STAGE_ID),
   };
   if (OWNER_ID) base.user_id = Number(OWNER_ID);
+
+  // Campos customizados de UTM (somente se a env key estiver configurada)
+  if (FIELD_CAMPAIGN_ID  && campaignId)             base[FIELD_CAMPAIGN_ID]  = campaignId;
+  if (FIELD_UTM_SOURCE   && tracking.utm_source)    base[FIELD_UTM_SOURCE]   = tracking.utm_source;
+  if (FIELD_UTM_MEDIUM   && tracking.utm_medium)    base[FIELD_UTM_MEDIUM]   = tracking.utm_medium;
+  if (FIELD_UTM_CAMPAIGN && tracking.utm_campaign)  base[FIELD_UTM_CAMPAIGN] = tracking.utm_campaign;
+  if (FIELD_GCLID        && tracking.gclid)         base[FIELD_GCLID]        = tracking.gclid;
 
   // Tenta com label, com fallback gracioso se o campo for rejeitado
   if (LABEL_ID) {
@@ -261,7 +275,7 @@ export async function createPipedriveRecord({
 
   // 4. Deal
   const dealTitle           = `${DEAL_TITLE_PREFIX} ${fullname} (${company})`;
-  const { deal, duplicate } = await resolveOrCreateDeal(person.id, org.id, dealTitle);
+  const { deal, duplicate } = await resolveOrCreateDeal(person.id, org.id, dealTitle, { campaignId, tracking });
 
   if (duplicate) return 'duplicate';
 

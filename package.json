@@ -9,6 +9,7 @@
   "scripts": {
     "discover:pipedrive": "node --env-file=.env.local scripts/pipedrive-discovery.js",
     "discover:mailchimp": "node --env-file=.env.local scripts/mailchimp-discovery.js",
-    "discover:manychat":  "node --env-file=.env.local scripts/manychat-discovery.js"
+    "discover:manychat":  "node --env-file=.env.local scripts/manychat-discovery.js",
+    "create:pdfields":    "node --env-file=.env.local scripts/pipedrive-create-fields.js"
   }
 }
