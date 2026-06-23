@@ -1,8 +1,8 @@
-// api/live-registration.js — Vercel Serverless Function (Node 18+)
+// api/live-registration.js — Vercel Serverless Function (Node 20+)
 // Fase 1: valida, normaliza, loga estruturado e redireciona.
 // TODOs marcados para Fases 2-4 (Pipedrive, Mailchimp, ManyChat, tracking).
 
-'use strict';
+import crypto from 'node:crypto';
 
 // ─── Rate limit em memória (reinicia a cada cold start) ───────────────────────
 const RATE_WINDOW_MS = 10 * 60 * 1000; // 10 min
@@ -149,7 +149,8 @@ export default async function handler(req, res) {
   // ── Normalização ──
   const normalizedPhone = normalizePhone(phone);
   const registeredAt    = new Date().toISOString();
-  const leadKey         = `${campaignId}:${emailRaw}`;
+  const leadKey         = `${campaignId}:${emailRaw}`; // uso interno/deduplicação, não vai ao log
+  const leadKeyHash     = crypto.createHash('sha256').update(leadKey).digest('hex').slice(0, 16);
 
   // Allowlist de campos opcionais de tracking
   const TRACKING_FIELDS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid','landing_page'];
@@ -158,17 +159,22 @@ export default async function handler(req, res) {
     if (body[f] !== undefined && body[f] !== '') tracking[f] = String(body[f]).slice(0, 500);
   }
 
-  // ── Log estruturado (sem dados sensíveis em claro) ──
+  // ── Log estruturado (sem PII completa) ──
   console.log(JSON.stringify({
-    level:         'info',
-    event:         'lead_received',
-    lead_key:      leadKey,
-    submission_id: submissionId,
-    campaign_id:   campaignId,
-    email_masked:  maskEmail(emailRaw),
-    registered_at: registeredAt,
-    status:        'ok',
-    ...tracking,
+    level:          'info',
+    event:          'lead_received',
+    submission_id:  submissionId,
+    campaign_id:    campaignId,
+    email_masked:   maskEmail(emailRaw),
+    lead_key_hash:  leadKeyHash,   // sha256(campaign_id:email)[0..16] — correlação sem expor e-mail
+    utm_source:     tracking.utm_source    || '',
+    utm_medium:     tracking.utm_medium    || '',
+    utm_campaign:   tracking.utm_campaign  || '',
+    fbclid:         tracking.fbclid        || '',
+    gclid:          tracking.gclid         || '',
+    landing_page:   tracking.landing_page  || '',
+    registered_at:  registeredAt,
+    status:         'ok',
   }));
 
   // ── TODO Fase 2: Pipedrive — criar Deal/Person ─────────────────────────────
@@ -186,9 +192,9 @@ export default async function handler(req, res) {
   // ── Resposta de sucesso ──
   res.writeHead(200, { 'Content-Type': 'application/json', ...corsHeaders(allowedOrigin) });
   return res.end(JSON.stringify({
-    ok:            true,
-    lead_key:      leadKey,
-    submission_id: submissionId,
-    redirect:      '/obrigado.html',
+    ok:             true,
+    lead_key_hash:  leadKeyHash,
+    submission_id:  submissionId,
+    redirect:       '/obrigado.html',
   }));
 }
