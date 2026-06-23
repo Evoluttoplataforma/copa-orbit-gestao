@@ -3,6 +3,7 @@
 // TODOs marcados para Fases 2-4 (Pipedrive, Mailchimp, ManyChat, tracking).
 
 import crypto from 'node:crypto';
+import { createPipedriveRecord } from './_lib/pipedrive.js';
 
 // ─── Rate limit em memória (reinicia a cada cold start) ───────────────────────
 const RATE_WINDOW_MS = 10 * 60 * 1000; // 10 min
@@ -177,8 +178,35 @@ export default async function handler(req, res) {
     status:         'ok',
   }));
 
-  // ── TODO Fase 2: Pipedrive — criar Deal/Person ─────────────────────────────
-  // await createPipedriveDeal({ fullname, email: emailRaw, phone: normalizedPhone, company, leadKey, submissionId, ...tracking });
+  // ── Fase 2: Pipedrive ─────────────────────────────────────────────────────
+  const ENABLE_PIPEDRIVE = process.env.ENABLE_PIPEDRIVE === 'true';
+  let   pipedriveResult  = 'skipped';
+
+  if (ENABLE_PIPEDRIVE) {
+    try {
+      pipedriveResult = await createPipedriveRecord({
+        fullname,
+        email:        emailRaw,
+        phone:        normalizedPhone,
+        company,
+        submissionId,
+        campaignId,
+        leadKeyHash,
+        registeredAt,
+        tracking,
+      });
+    } catch (err) {
+      console.log(JSON.stringify({
+        level:         'error',
+        event:         'pipedrive_critical_failure',
+        submission_id: submissionId,
+        lead_key_hash: leadKeyHash,
+        error:         err.message,
+      }));
+      res.writeHead(502, { 'Content-Type': 'application/json', ...corsHeaders(allowedOrigin) });
+      return res.end(JSON.stringify({ ok: false, error: 'crm_failed' }));
+    }
+  }
 
   // ── TODO Fase 3: Mailchimp — subscribe + tag ───────────────────────────────
   // await subscribeMailchimp({ email: emailRaw, fullname, tags: [campaignId], ...tracking });
@@ -196,5 +224,6 @@ export default async function handler(req, res) {
     lead_key_hash:  leadKeyHash,
     submission_id:  submissionId,
     redirect:       '/obrigado.html',
+    integrations:   { pipedrive: pipedriveResult },
   }));
 }
