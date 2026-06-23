@@ -5,6 +5,7 @@
 import crypto from 'node:crypto';
 import { createPipedriveRecord } from './_lib/pipedrive.js';
 import { subscribeAndTag }        from './_lib/mailchimp.js';
+import { linkAndTag }               from './_lib/manychat.js';
 
 // ─── Rate limit em memória (reinicia a cada cold start) ───────────────────────
 const RATE_WINDOW_MS = 10 * 60 * 1000; // 10 min
@@ -233,8 +234,28 @@ export default async function handler(req, res) {
     }
   }
 
-  // ── TODO Fase 4: ManyChat — vincular subscriber + UTMs ─────────────────────
-  // await manyChatLink({ phone: normalizedPhone, submissionId, ...tracking });
+  // ── Fase 4: ManyChat (best-effort) ───────────────────────────────────────
+  const ENABLE_MANYCHAT = process.env.ENABLE_MANYCHAT === 'true';
+  let   manychatResult  = 'skipped';
+
+  if (ENABLE_MANYCHAT) {
+    try {
+      manychatResult = await linkAndTag({
+        fullname,
+        phoneE164: normalizedPhone,
+      });
+    } catch (err) {
+      console.log(JSON.stringify({
+        level:         'warn',
+        event:         'manychat_failed',
+        submission_id: submissionId,
+        lead_key_hash: leadKeyHash,
+        status:        err.status ?? null,
+        error:         err.message,
+      }));
+      manychatResult = 'retry';
+    }
+  }
 
   // ── TODO Fase 5: Meta CAPI — enviar evento Lead com submission_id como event_id
   // await sendMetaCAPI({ event_id: submissionId, email: emailRaw, phone: normalizedPhone, ...tracking });
@@ -247,6 +268,7 @@ export default async function handler(req, res) {
     lead_key_hash: leadKeyHash,
     pipedrive:     pipedriveResult,
     mailchimp:     mailchimpResult,
+    manychat:      manychatResult,
   }));
 
   // ── Resposta de sucesso ──
@@ -256,6 +278,6 @@ export default async function handler(req, res) {
     lead_key_hash:  leadKeyHash,
     submission_id:  submissionId,
     redirect:       '/obrigado.html',
-    integrations:   { pipedrive: pipedriveResult, mailchimp: mailchimpResult },
+    integrations:   { pipedrive: pipedriveResult, mailchimp: mailchimpResult, manychat: manychatResult },
   }));
 }
