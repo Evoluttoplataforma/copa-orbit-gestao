@@ -175,7 +175,7 @@ export default async function handler(req, res) {
     gclid:          tracking.gclid         || '',
     landing_page:   tracking.landing_page  || '',
     registered_at:  registeredAt,
-    status:         'ok',
+    status:         'received',
   }));
 
   // ── Fase 2: Pipedrive ─────────────────────────────────────────────────────
@@ -216,6 +216,15 @@ export default async function handler(req, res) {
 
   // ── TODO Fase 5: Meta CAPI — enviar evento Lead com submission_id como event_id
   // await sendMetaCAPI({ event_id: submissionId, email: emailRaw, phone: normalizedPhone, ...tracking });
+
+  // ── Log pós-integração ────────────────────────────────────────────────────
+  console.log(JSON.stringify({
+    level:         'info',
+    event:         'lead_processed',
+    submission_id: submissionId,
+    lead_key_hash: leadKeyHash,
+    pipedrive:     pipedriveResult,
+  }));
 
   // ── Resposta de sucesso ──
   res.writeHead(200, { 'Content-Type': 'application/json', ...corsHeaders(allowedOrigin) });

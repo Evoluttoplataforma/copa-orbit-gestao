@@ -107,7 +107,7 @@ async function resolveOrCreatePerson(fullname, email, phone) {
   }
 
   const byPhone = await pdGet('/persons/search', {
-    term: phone, fields: 'phone', limit: 1,
+    term: phone, fields: 'phone', exact_match: true, limit: 1,
   });
   if (byPhone.data?.items?.length) {
     const person = byPhone.data.items[0].item;
