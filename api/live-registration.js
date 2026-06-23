@@ -4,6 +4,7 @@
 
 import crypto from 'node:crypto';
 import { createPipedriveRecord } from './_lib/pipedrive.js';
+import { subscribeAndTag }        from './_lib/mailchimp.js';
 
 // ─── Rate limit em memória (reinicia a cada cold start) ───────────────────────
 const RATE_WINDOW_MS = 10 * 60 * 1000; // 10 min
@@ -208,8 +209,29 @@ export default async function handler(req, res) {
     }
   }
 
-  // ── TODO Fase 3: Mailchimp — subscribe + tag ───────────────────────────────
-  // await subscribeMailchimp({ email: emailRaw, fullname, tags: [campaignId], ...tracking });
+  // ── Fase 3: Mailchimp (best-effort) ──────────────────────────────────────
+  const ENABLE_MAILCHIMP = process.env.ENABLE_MAILCHIMP === 'true';
+  let   mailchimpResult  = 'skipped';
+
+  if (ENABLE_MAILCHIMP) {
+    try {
+      mailchimpResult = await subscribeAndTag({
+        email:   emailRaw,
+        fullname,
+        phone:   normalizedPhone,
+        company,
+      });
+    } catch (err) {
+      console.log(JSON.stringify({
+        level:         'warn',
+        event:         'mailchimp_failed',
+        submission_id: submissionId,
+        lead_key_hash: leadKeyHash,
+        error:         err.message,
+      }));
+      mailchimpResult = 'retry';
+    }
+  }
 
   // ── TODO Fase 4: ManyChat — vincular subscriber + UTMs ─────────────────────
   // await manyChatLink({ phone: normalizedPhone, submissionId, ...tracking });
@@ -224,6 +246,7 @@ export default async function handler(req, res) {
     submission_id: submissionId,
     lead_key_hash: leadKeyHash,
     pipedrive:     pipedriveResult,
+    mailchimp:     mailchimpResult,
   }));
 
   // ── Resposta de sucesso ──
@@ -233,6 +256,6 @@ export default async function handler(req, res) {
     lead_key_hash:  leadKeyHash,
     submission_id:  submissionId,
     redirect:       '/obrigado.html',
-    integrations:   { pipedrive: pipedriveResult },
+    integrations:   { pipedrive: pipedriveResult, mailchimp: mailchimpResult },
   }));
 }
