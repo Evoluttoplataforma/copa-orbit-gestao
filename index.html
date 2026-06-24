@@ -612,6 +612,13 @@
           rgba(4,4,4,0.92) 100%) !important;
       }
     }
+
+    /* ===== LGPD CONSENT CHECKBOX ===== */
+    .form-consent { display: flex; align-items: flex-start; gap: 10px; padding: 2px 0 0; }
+    .form-consent__check { flex-shrink: 0; width: 15px; height: 15px; margin-top: 3px; accent-color: var(--yellow); cursor: pointer; }
+    .form-consent__text { font-family: 'Poppins', sans-serif; font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.5; cursor: pointer; }
+    .form-consent__text a { color: var(--yellow); text-decoration: underline; }
+    .form-consent__text a:hover { color: #fff; }
   </style>
 </head>
 <body>
@@ -885,6 +892,12 @@
             <input type="text" name="company" placeholder="Nome da sua consultoria" required />
           </label>
         </div>
+        <div class="form-consent">
+          <input type="checkbox" id="consentCheck" name="consent" value="yes" class="form-consent__check" />
+          <label for="consentCheck" class="form-consent__text">
+            Li e aceito a <a href="[URL_POLITICA_PRIVACIDADE_ORBIT]" target="_blank" rel="noopener noreferrer">Política de Privacidade</a> e concordo em receber comunicações da Orbit por e-mail e WhatsApp.
+          </label>
+        </div>
         <button type="submit" id="btnSubmit" class="btn-submit">
           QUERO GARANTIR MINHA VAGA →
         </button>
@@ -1000,6 +1013,13 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
+    // Validação do consentimento LGPD
+    var consentCheck = document.getElementById('consentCheck');
+    if (!consentCheck || !consentCheck.checked) {
+      if (errEl) { errEl.textContent = 'Para continuar, aceite a Política de Privacidade marcando a caixa acima.'; errEl.style.display = 'block'; }
+      return;
+    }
+
     // Reatualiza os hiddens (garante valores no retry com mesmo submission_id)
     setHidden('h_campaign_id',   CAMPAIGN_ID);
     setHidden('h_submission_id', submissionId);
@@ -1025,8 +1045,10 @@
     TRACKING_KEYS.forEach(function (key) {
       data[key] = tracking[key] || '';
     });
-    data.client_id = getGaClientId();
-    data.fbp       = getCookie('_fbp');
+    data.client_id    = getGaClientId();
+    data.fbp          = getCookie('_fbp');
+    data.consent      = true;
+    data.consent_text = 'Li e aceito a Política de Privacidade e concordo em receber comunicações da Orbit por e-mail e WhatsApp.';
 
     fetch('/api/live-registration', {
       method:  'POST',
